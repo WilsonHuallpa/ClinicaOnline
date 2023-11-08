@@ -17,9 +17,9 @@ import { ClinicaService } from 'src/app/services/clinica.service';
 @Component({
   selector: 'app-alta-pacientes',
   templateUrl: './alta-pacientes.component.html',
-  styleUrls: ['./alta-pacientes.component.scss'],
+  styleUrls: ['./alta-pacientes.component.scss']
 })
-export class AltaPacientesComponent implements OnInit {
+export class AltaPacientesComponent implements OnInit{
   paciente: FormGroup;
   file: any;
   file2: any;

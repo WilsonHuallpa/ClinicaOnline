@@ -3,5 +3,49 @@
     [profPendientes]="profPendientes"
     (onAceptarRechazar)="onAceptarRechazar($event.id, $event.value)"
   />
-  
+
+  <div class="container">
+    <h4 class="border-bottom pb-2 mb-0">Alta de Usuarios</h4>
+    <div class="card">
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [class.active]="isClienteActive"
+              (click)="mostrarClienteComponent()"
+              >Paciente</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [class.active]="isProfesionalActive"
+              (click)="mostrarProfesionalComponent()"
+              >Profesional</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [class.active]="isAdmin"
+              (click)="mostrarAdminComponent()"
+              >Administrador</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <div *ngIf="isClienteActive">
+          <app-alta-pacientes></app-alta-pacientes>
+        </div>
+        <div *ngIf="isProfesionalActive">
+          <app-alta-profesionales></app-alta-profesionales>
+        </div>
+        <div *ngIf="isAdmin">
+          <app-alta-admin></app-alta-admin>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

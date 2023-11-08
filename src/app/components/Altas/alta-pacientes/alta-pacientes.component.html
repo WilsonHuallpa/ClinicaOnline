@@ -1,16 +1,13 @@
-
 <div class="container mb-5">
-    <div class="row g-5 mt-1" *ngIf="!loading">
-      <div class="col-md-5 col-lg-4 order-md-last">
-        <app-tabla-especialidad (seleccionar)="seleccionarEspecialidad($event)" />
-      </div>
-      <div class="col-md-7 col-lg-8">
-        <h4 class="mb-3">Registro de profesional</h4>
+    <div class="row" *ngIf="!loading">
+      <div class="col-12">
+        <h4 class="mb-3">Registro de paciente</h4>
         <form
-          (ngSubmit)="addprofesional()"
-          [formGroup]="profesional"
+          (ngSubmit)="addPaciente()"
+          [formGroup]="paciente"
           class="needs-validation"
           novalidate
+         
         >
           <div class="row g-3">
             <div class="col-12 col-lg-6">
@@ -24,8 +21,8 @@
               />
               <span
                 *ngIf="
-                  profesional.get('nombre')?.hasError('required') &&
-                  profesional.get('nombre')?.touched
+                  paciente.get('nombre')?.hasError('required') &&
+                  paciente.get('nombre')?.touched
                 "
                 class="text-danger"
               >
@@ -33,8 +30,8 @@
               >
               <span
                 *ngIf="
-                  profesional.get('nombre')?.hasError('minlength') &&
-                  profesional.get('nombre')?.touched
+                  paciente.get('nombre')?.hasError('minlength') &&
+                  paciente.get('nombre')?.touched
                 "
                 class="text-danger"
               >
@@ -52,8 +49,8 @@
               />
               <span
                 *ngIf="
-                  profesional.get('apellido')?.hasError('required') &&
-                  profesional.get('apellido')?.touched
+                  paciente.get('apellido')?.hasError('required') &&
+                  paciente.get('apellido')?.touched
                 "
                 class="text-danger"
               >
@@ -61,8 +58,8 @@
               >
               <span
                 *ngIf="
-                  profesional.get('apellido')?.hasError('minlength') &&
-                  profesional.get('apellido')?.touched
+                  paciente.get('apellido')?.hasError('minlength') &&
+                  paciente.get('apellido')?.touched
                 "
                 class="text-danger"
               >
@@ -81,8 +78,8 @@
               />
               <span
                 *ngIf="
-                  profesional.get('edad')?.hasError('required') &&
-                  profesional.get('edad')?.touched
+                  paciente.get('edad')?.hasError('required') &&
+                  paciente.get('edad')?.touched
                 "
                 class="text-danger"
               >
@@ -90,8 +87,8 @@
               >
               <span
                 *ngIf="
-                  profesional.get('edad')?.hasError('min') &&
-                  profesional.get('edad')?.touched
+                  paciente.get('edad')?.hasError('min') &&
+                  paciente.get('edad')?.touched
                 "
                 class="text-danger"
               >
@@ -99,16 +96,16 @@
               </span>
               <span
                 *ngIf="
-                  profesional.get('edad')?.hasError('max') &&
-                  profesional.get('edad')?.touched
+                  paciente.get('edad')?.hasError('max') &&
+                  paciente.get('edad')?.touched
                 "
                 class="text-danger"
               >
                 La <strong>Edad</strong> debe ser menor o igual a 99 años.
               </span>
               <span 
-              *ngIf=" profesional.get('edad')?.hasError('soloNumeros') 
-                      && profesional.get('edad')?.touched"
+              *ngIf=" paciente.get('edad')?.hasError('soloNumeros') 
+                      && paciente.get('edad')?.touched"
               class="text-danger">
               La <strong>Edad</strong> solo permiten numeros
           </span>
@@ -123,29 +120,25 @@
                 formControlName="dni"
               />
               <span 
-                  *ngIf="profesional.get('dni')?.hasError('required') 
-                          && profesional.get('dni')?.touched"
+                  *ngIf="paciente.get('dni')?.hasError('required') 
+                          && paciente.get('dni')?.touched"
                   class="text-danger">
                   El <strong>DNI</strong> es requerido
               </span>
               <span 
-                  *ngIf=" profesional.get('dni')?.hasError('soloNumeros') 
-                          && profesional.get('dni')?.touched"
+                  *ngIf=" paciente.get('dni')?.hasError('soloNumeros') 
+                          && paciente.get('dni')?.touched"
                   class="text-danger">
                   El <strong>DNI</strong> solo permiten numeros
               </span>
             </div>
-            <!-- especialidades -->
+  
             <div class="col-12">
-              <h5>Especialidades</h5>
-              <div style="white-space: nowrap;">
-                <div *ngFor="let especialidad of especialidades" style="display: inline-block; white-space: normal; margin-right: 10px;">
-                  <span class="badge rounded-pill text-bg-primary" style="font-size: 18px;">
-                    {{ especialidad.nombre }}
-                    <button class="btn-delete" (click)="eliminarElemento(especialidad?.id)">X</button>
-                  </span>
-                </div>
-              </div>
+              <label for="obraSocial" class="form-label">Obra social</label>
+              <select class="form-select" aria-label="Obra Social" formControlName="obraSocial">
+                <option [ngValue]="null">Selecciona una Obra Social</option>
+                <option *ngFor="let obraSocial of obraSociales" [ngValue]="obraSocial.nombre">{{ obraSocial.nombre }}</option>
+              </select>
             </div>
 
             <div class="col-12">
@@ -157,14 +150,14 @@
                 formControlName="mail"
               />
               <span 
-                  *ngIf="profesional.get('mail')?.hasError('required') 
-                          && profesional.get('mail')?.touched"
+                  *ngIf="paciente.get('mail')?.hasError('required') 
+                          && paciente.get('mail')?.touched"
                   class="text-danger">
                   El <strong>Correo Electronico</strong> es requerido
               </span>
               <span 
-                  *ngIf=" profesional.get('mail')?.hasError('email') 
-                          && profesional.get('mail')?.touched"
+                  *ngIf=" paciente.get('mail')?.hasError('email') 
+                          && paciente.get('mail')?.touched"
                   class="text-danger">
                   El <strong> Correo Electronico</strong> no tiene el formato correcto.
               </span>
@@ -179,14 +172,14 @@
                 formControlName="password"
               />
               <span 
-                  *ngIf="profesional.get('password')?.hasError('password') 
-                          && profesional.get('password')?.touched"
+                  *ngIf="paciente.get('password')?.hasError('password') 
+                          && paciente.get('password')?.touched"
                   class="text-danger">
                   La <strong> Contraseña </strong> es requerida
               </span>
               <span 
-                  *ngIf=" profesional.get('password')?.hasError('minlength') 
-                          && profesional.get('password')?.touched"
+                  *ngIf=" paciente.get('password')?.hasError('minlength') 
+                          && paciente.get('password')?.touched"
                   class="text-danger">
                   La <strong> Contraseña </strong> tiene que ser mayor a 6 caracteres.
               </span>
@@ -202,6 +195,20 @@
                 (change)="uploadImage($event)"
               />
             </div>
+
+            <div class="col-12">
+              <label for="image01n" class="form-label">
+                Imagen 2
+                <span class="text-muted">(Opcional)</span>
+              </label>
+              <input
+                type="file"
+                class="form-control"
+                id="image01n"
+                placeholder=""
+                (change)="uploadImage2($event)"
+              />
+            </div>
           </div>
   
           <hr class="my-4" />
@@ -209,7 +216,7 @@
             class="w-100 btn btn-lg"
             style="background-color: #0d689d; color: white"
             type="submit"
-            [disabled]="especialidades.length === 0 || !profesional.valid "
+            [disabled]="!paciente.valid"
           >
             Agregar
           </button>

@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 import { Paciente } from '../interfaces/Paciente';
 import { Profesional } from '../interfaces/Profesional';
 import Especialidad from '../interfaces/Especialidad';
+import Administrador from '../interfaces/Administrador';
 
 @Injectable({
   providedIn: 'root',
@@ -90,5 +91,10 @@ export class ClinicaService {
   getEspecialidadProfesional(id: string):Observable<[]> {
     const collRef = collection(this.fire, `usuarios/${id}/especialidades`);
     return collectionData(collRef, { idField: 'id' }) as Observable<[]>;
+  }
+//administrador
+  addAdministrador(user: Administrador) {
+    const collRef = collection(this.fire, 'usuarios');
+    return addDoc(collRef, user);
   }
 }

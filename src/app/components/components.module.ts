@@ -8,6 +8,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuClinicaComponent } from './menu-clinica/menu-clinica.component';
 import { ListProfPendientesComponent } from './list-prof-pendientes/list-prof-pendientes.component';
 import { ModalUsuarioComponent } from './modal-usuario/modal-usuario.component';
+import { AltaPacientesComponent } from './Altas/alta-pacientes/alta-pacientes.component';
+import { AltaProfesionalesComponent } from './Altas/alta-profesionales/alta-profesionales.component';
+import { AltaAdminComponent } from './Altas/alta-admin/alta-admin.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { ModalUsuarioComponent } from './modal-usuario/modal-usuario.component';
     TablaEspecialidadComponent,
     MenuClinicaComponent,
     ListProfPendientesComponent,
-    ModalUsuarioComponent
+    ModalUsuarioComponent,
+    AltaPacientesComponent,
+    AltaProfesionalesComponent,
+    AltaAdminComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +34,10 @@ import { ModalUsuarioComponent } from './modal-usuario/modal-usuario.component';
     LayoutComponent,
     SpinnerComponent,
     TablaEspecialidadComponent,
-    ListProfPendientesComponent
+    ListProfPendientesComponent,
+    AltaPacientesComponent,
+    AltaProfesionalesComponent,
+    AltaAdminComponent
   ]
 })
 
