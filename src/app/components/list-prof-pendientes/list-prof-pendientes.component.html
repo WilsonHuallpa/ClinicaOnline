@@ -18,8 +18,8 @@
           <td>{{ profesional.mail }}</td>
           <td>{{ profesional.dni }}</td>
           <td>
-            <button class="btn btn-sm btn-danger">Aceptar</button>
-            <button class="btn btn-sm btn-success">Rechazar</button>
+            <button class="btn btn-sm btn-danger" (click)="aceptarRechazar(profesional.id || '','Aprobado')">Aceptar</button>
+            <button class="btn btn-sm btn-success" (click)="aceptarRechazar(profesional.id || '','Rechazado')">Rechazar</button>
             <button
               class="btn btn-sm btn-info"
               (click)="setSelectedItem(profesional)"

@@ -16,4 +16,7 @@ export class SectionUserComponent implements OnInit {
       this.profPendientes = data;
     })
   }
+  async onAceptarRechazar(id:string, value: string){
+    await this.clinicaFire.updateProfesional(id, value);
+  }
 }

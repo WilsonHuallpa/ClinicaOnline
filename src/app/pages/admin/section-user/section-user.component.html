@@ -1,5 +1,7 @@
 <div>
+  <app-list-prof-pendientes
+    [profPendientes]="profPendientes"
+    (onAceptarRechazar)="onAceptarRechazar($event.id, $event.value)"
+  />
   
-  <app-list-prof-pendientes [profPendientes]="profPendientes" />
-
 </div>

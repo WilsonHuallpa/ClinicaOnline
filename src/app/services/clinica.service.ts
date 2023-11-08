@@ -4,7 +4,9 @@ import {
   addDoc,
   collection,
   collectionData,
+  doc,
   query,
+  updateDoc,
   where,
 } from '@angular/fire/firestore';
 import { ObraSocial } from '../interfaces/ObraSocial';
@@ -46,13 +48,12 @@ export class ClinicaService {
     const collRef = collection(this.fire, 'usuarios');
     return addDoc(collRef, profesional);
   }
-  addProfesionalEspecialidad(idprofesional: string, especialidad: any) {
-    const aCollection = collection(
-      this.fire,
-      `peliculas/${idprofesional}/especialidades`
-    );
-    return addDoc(aCollection, especialidad);
+  updateProfesional(id:string, value:string){
+    const docRef = doc(this.fire, "usuarios", id);
+    return updateDoc(docRef,{estado: value});
   }
+
+
   getProfesionales(): Observable<Profesional[]> {
     const collRef = collection(this.fire, 'usuarios');
     const q = query(
@@ -63,6 +64,15 @@ export class ClinicaService {
 
     return collectionData(q, { idField: 'id' }) as Observable<Profesional[]>;
   }
+
+  addProfesionalEspecialidad(idprofesional: string, especialidad: any) {
+    const aCollection = collection(
+      this.fire,
+      `peliculas/${idprofesional}/especialidades`
+    );
+    return addDoc(aCollection, especialidad);
+  }
+ 
 
   //Especialidadesa
   addEspecialidadProfecional(especialidadID: string, id: string) {
