@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Item } from './components/layout/layout.component';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,41 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'clinicaOnline';
+  items: Item[] = [
+    {
+      title: 'Inicio',
+      link: '/',
+      active: true,
+    },
+    {
+      title: 'Admin',
+      link: '/admin',
+      active: true
+    }
+  ]
+
+  itemAuth: Item[] = [
+    {
+      title: 'Acceso',
+      link: '/auth/login',
+      active: false, 
+    },
+    {
+      title: 'Empezar',
+      link: '/',
+      active: false, 
+      children: [
+        {
+          title: 'Profesionales',
+          link: '/auth/altaProfesional',
+          active: true,
+        },
+        {
+          title: 'Paciente',
+          link: '/auth/altaPaciente',
+          active: false,
+        },
+      ],
+    }
+  ]
 }

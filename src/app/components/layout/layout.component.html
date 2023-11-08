@@ -1,0 +1,106 @@
+<div>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <div class="container container-fluid">
+        <a class="navbar-brand" routerLink="/">
+          <img
+            src="../../../assets/icon-clinica.png"
+            alt="Bootstrap"
+            width="60"
+            height="60"
+          />
+          Clínica OnLine
+        </a>
+  
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item" *ngFor="let item of items">
+              <ng-container *ngIf="item.children; else normalLink">
+                <li class="nav-item dropdown">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    {{ item.title }}
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li *ngFor="let child of item.children">
+                      <a class="dropdown-item" [routerLink]="child.link">{{
+                        child.title
+                      }}</a>
+                    </li>
+                  </ul>
+                </li>
+              </ng-container>
+              <ng-template #normalLink>
+                <li class="nav-item">
+                  <a
+                    [routerLink]="item.link"
+                    routerLinkActive="active"
+                    class="nav-link active"
+                    aria-current="page"
+                    >{{ item.title }}</a
+                  >
+                </li>
+              </ng-template>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <div *ngFor="let itemAuth of itemsAuth">
+              <ng-container *ngIf="itemAuth.children; else normalLink">
+                <div class="btn-group" role="group">
+                  <button
+                    type="button"
+                    class="btn btn-primary dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    {{ itemAuth.title }}
+                  </button>
+                  <ul class="dropdown-menu  dropdown-menu-left" style="left: auto; right: 0;"> <!-- Usa la clase dropdown-menu-right para alinear el menú hacia la izquierda -->
+                    <li *ngFor="let child of itemAuth.children">
+                      <a class="dropdown-item" [routerLink]="child.link">{{ child.title }}</a>
+                    </li>
+                  </ul>
+                </div>
+              </ng-container>
+              <ng-template #normalLink>
+                <div style="color: aliceblue; padding: 8px; margin-right: 5px;">
+                  <a
+                    [routerLink]="itemAuth.link"
+                    routerLinkActive="active"
+                    class="nav-link active"
+                    aria-current="page"
+                    >{{ itemAuth.title }}</a
+                  >
+                </div>
+              </ng-template>
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+  
+    <section>
+      <ng-content select="router-outlet"></ng-content>
+    </section>
+  
+    <footer>
+      <ng-content select="#footer"></ng-content>
+    </footer>
+  </div>
+  
+  

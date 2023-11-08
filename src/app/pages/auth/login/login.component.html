@@ -1,0 +1,100 @@
+<div class="container-login ">
+    <div class="d-flex justify-content-center align-items-center mt-4">
+      <div *ngIf="!loading" class="card" style="width: 400px">
+        <div class="card-body">
+          <h3>Ingresar a mi portal</h3>
+          <p style="color: rgb(96, 95, 95);">Por favor, complete los siguientes datos</p>
+          <form (ngSubmit)="login()" [formGroup]="loginUsuario">
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName="email">
+              <label for="floatingInput">Email address</label>
+              <span
+                *ngIf="
+                  loginUsuario.get('email')?.hasError('required') &&
+                  loginUsuario.get('email')?.touched
+                "
+                class="text-danger"
+              >
+                EL <strong>correo</strong> es requerido</span
+              >
+              <span
+                *ngIf="
+                  loginUsuario.get('email')?.hasError('email') &&
+                  loginUsuario.get('email')?.touched
+                "
+                class="text-danger"
+              >
+                EL <strong>correo</strong> es invalido</span
+              >
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label"
+                >Contraseña</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="exampleInputPassword1"
+                formControlName="password"
+              />
+              <span
+                *ngIf="
+                  loginUsuario.get('password')?.hasError('required') &&
+                  loginUsuario.get('password')?.touched
+                "
+                class="text-danger"
+              >
+                La <strong>contraseña</strong> es requerido</span
+              >
+              <span
+                *ngIf="
+                  loginUsuario.get('password')?.hasError('minlength') &&
+                  loginUsuario.get('password')?.touched
+                "
+                class="text-danger"
+              >
+                La <strong>contraseña</strong> debe de tener 6 caracteres</span
+              >
+            </div>
+            <button
+              class="btn btn-primary w-100 btn-lg"
+              type="submit"
+              [disabled]="loginUsuario.invalid"
+            >
+              INGRESAR
+            </button>
+          </form>
+          <div class="text-center">
+            <p class="mt-3">
+              No tienes cuenta? <a routerLink="/auth/register">Registrar</a>
+            </p>
+          </div>
+        </div>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button
+            type="button"
+            (click)="quickAccess('wilson@gmail.com', '123456')"
+            class="btn btn-primary"
+          >
+            wilson
+          </button>
+          <button
+            type="button"
+            (click)="quickAccess('franco@gmail.com', '123456')"
+            class="btn btn btn-success"
+          >
+            franco
+          </button>
+          <button
+            type="button"
+            (click)="quickAccess('lautaro@gmail.com', '123456')"
+            class="btn btn-warning"
+          >
+            lautaro
+          </button>
+        </div>
+      </div>
+      <app-spinner *ngIf="loading"></app-spinner> 
+    </div>
+  </div>
+  
