@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { FireErrorService } from 'src/app/services/fire-error.service';
+import { ClinicaService } from 'src/app/services/clinica.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginComponent {
     private authUser: AuthService,
     private router: Router,
     private toastr: ToastrService,
-    private fireError: FireErrorService
+    private fireError: FireErrorService,
+    private clinicaFire: ClinicaService
   ) {
     this.loginUsuario = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -32,12 +34,25 @@ export class LoginComponent {
     this.loading = true;
     this.authUser
       .loginUser(email, password)
-      .then(() => {
-        this.router.navigate(['/welcome']);
-      })
-      .catch((error) => {
+      .then(async (data) => {
+        console.log(data.user.uid);
+        const docSnap = await this.clinicaFire.getUserByID(data.user.uid);
+        const user = docSnap.data();
+        if (!user) {
+          return;
+        }
+        const rol = user['rol'];
+        if (rol == 'Profesional') this.vericargarStatus(user['estado']);
+        this.redirectoPage(rol);
         this.loading = false;
-        this.toastr.error(this.fireError.codeError(error.code), 'Error');
+      })
+      .catch((error: any) => {
+        this.loading = false;
+        if (error.message) {
+          this.toastr.error(error.message, 'Error');
+        } else {
+          this.toastr.error(this.fireError.codeError(error.code), 'Error');
+        }
       });
   }
   quickAccess(email: string, password: string) {
@@ -45,5 +60,24 @@ export class LoginComponent {
       email: email,
       password: password,
     });
+  }
+  redirectoPage(profile: string) {
+    switch (profile) {
+      case 'Administrador':
+        this.router.navigate(['/admin']);
+        break;
+      case 'Paciente':
+        this.router.navigate(['/Profesional']);
+        break;
+      case 'Profesional':
+        this.router.navigate(['/Profesional']);
+        break;
+    }
+  }
+  vericargarStatus(status: string) {
+    if (status == 'Pendiente')
+      throw new Error('El usuario esta Pendiente. Se requiere Aprobación.');
+    if (status == 'Rechazado')
+      throw new Error('El usuario fue rechazado. Lo siento!');
   }
 }

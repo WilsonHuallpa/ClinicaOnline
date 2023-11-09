@@ -7,6 +7,7 @@ export class FireErrorService {
 
   constructor() { }
   codeError(code: string) {
+    console.log(code)
     switch (code) {
       case 'auth/email-already-in-use':
         return 'El usuario ya existe';

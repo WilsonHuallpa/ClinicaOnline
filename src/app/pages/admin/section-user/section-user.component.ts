@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Profesional } from 'src/app/interfaces/Profesional';
+import { AuthService } from 'src/app/services/auth.service';
 import { ClinicaService } from 'src/app/services/clinica.service';
 
 @Component({
@@ -12,8 +14,13 @@ export class SectionUserComponent implements OnInit {
   isClienteActive: boolean = true;
   isProfesionalActive: boolean = false;
   isAdmin: boolean = false; 
-  constructor(private clinicaFire: ClinicaService) {}
+  constructor(private clinicaFire: ClinicaService, private auth: AuthService, private router: Router) {}
 
+  logout() {
+    this.auth.logout().then(() => {
+      this.router.navigate(['/auth']);
+    });
+  }
   ngOnInit(): void {
     this.clinicaFire.getProfesionales().subscribe((data)=> {
       this.profPendientes = data;

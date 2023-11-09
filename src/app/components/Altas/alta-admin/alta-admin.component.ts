@@ -12,6 +12,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ObraSocial } from 'src/app/interfaces/ObraSocial';
+import { AuthService } from 'src/app/services/auth.service';
 import { ClinicaService } from 'src/app/services/clinica.service';
 
 @Component({
@@ -27,7 +28,8 @@ export class AltaAdminComponent implements OnInit{
   constructor(
     private fb: FormBuilder,
     private clinicaFire: ClinicaService,
-    private storage: Storage
+    private storage: Storage,
+    private auth: AuthService
   ) {
     this.admin = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
@@ -69,9 +71,19 @@ export class AltaAdminComponent implements OnInit{
         const Url = await this.uploadFile(this.file);
         this.admin.patchValue({ imagen: Url });
       }
-      const admin = this.admin.value;
-      const rep = await this.clinicaFire.addAdministrador(admin)
-      console.log('respuesta de firestores: ', rep)
+      const email = this.admin.value.mail;
+      const password = this.admin.value.password;
+      const respuesta = await this.auth.registerUser(email, password);
+      
+      if(respuesta){
+        console.log('se creo un nuevo registro')
+        const id = respuesta.user.uid;
+        console.log(id);
+        this.admin.patchValue({ password: '' });
+        const admin = this.admin.value;
+        await this.clinicaFire.addAdministrador(admin,id)
+      }
+      this.admin.reset()
     } catch (error) {
       console.log('Error: ', error);
     } finally {
@@ -82,5 +94,10 @@ export class AltaAdminComponent implements OnInit{
     const imgRef = ref(this.storage, `images/${this.file.name}`);
     const snapshot = await uploadBytes(imgRef, file);
     return await getDownloadURL(imgRef);
+  }
+
+  async verificarCorreo(){
+    const user = await this.auth.getUserLogged();
+    console.log(user)
   }
 }

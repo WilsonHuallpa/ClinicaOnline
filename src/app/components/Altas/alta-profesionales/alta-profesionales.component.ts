@@ -12,6 +12,7 @@ import {
   Validators,
 } from '@angular/forms';
 import Especialidad from 'src/app/interfaces/Especialidad';
+import { AuthService } from 'src/app/services/auth.service';
 import { ClinicaService } from 'src/app/services/clinica.service';
 @Component({
   selector: 'app-alta-profesionales',
@@ -26,7 +27,8 @@ export class AltaProfesionalesComponent {
   constructor(
     private fb: FormBuilder,
     private clinicaFire: ClinicaService,
-    private storage: Storage
+    private storage: Storage,
+    private auth: AuthService
   ) {
     this.profesional = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
@@ -71,17 +73,25 @@ export class AltaProfesionalesComponent {
         const Url = await this.uploadFile(this.file);
         this.profesional.patchValue({ imagen: Url });
       }
-    
-      const profesional = this.profesional.value;
-      const resp = await this.clinicaFire.addProfesional(profesional)
-      if(this.especialidades.length > 0){
-        const profeID = resp.id;
-        for(const especialidad of this.especialidades) {
-          if(especialidad.id){
-            this.clinicaFire.addEspecialidadProfecional(especialidad.id, profeID)
+      const email = this.profesional.value.mail;
+      const password = this.profesional.value.password;
+      const respuesta = await this.auth.registerUser(email, password);
+      if(respuesta){
+        console.log('se creo un nuevo registro')
+        const id = respuesta.user.uid;
+        this.profesional.patchValue({ password: '' });
+        const profesional = this.profesional.value;
+        await this.clinicaFire.addProfesional(profesional, id);
+        if(this.especialidades.length > 0){
+          for(const especialidad of this.especialidades) {
+            if(especialidad.id){
+              this.clinicaFire.addEspecialidadProfecional(especialidad.id, id)
+            }
           }
         }
+        this.profesional.reset();
       }
+      
     } catch (error) {
       console.log('Error: ', error);
     } finally {

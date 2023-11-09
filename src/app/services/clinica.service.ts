@@ -5,7 +5,10 @@ import {
   collection,
   collectionData,
   doc,
+  getDoc,
+  getDocs,
   query,
+  setDoc,
   updateDoc,
   where,
 } from '@angular/fire/firestore';
@@ -35,9 +38,10 @@ export class ClinicaService {
   }
 
   // Apaciente
-  addPaciente(paciente: Paciente) {
+  addPaciente(paciente: Paciente, id: string) {
     const collRef = collection(this.fire, 'usuarios');
-    return addDoc(collRef, paciente);
+    const docRef = doc(collRef, id);
+    return setDoc(docRef, paciente);
   }
   getPaciente(): Observable<Paciente[]> {
     const collRef = collection(this.fire, 'usuarios');
@@ -45,15 +49,15 @@ export class ClinicaService {
   }
 
   // Profesionales
-  addProfesional(profesional: Profesional) {
+  addProfesional(profesional: Profesional, id: string) {
     const collRef = collection(this.fire, 'usuarios');
-    return addDoc(collRef, profesional);
+    const docRef = doc(collRef, id);
+    return setDoc(docRef, profesional);
   }
-  updateProfesional(id:string, value:string){
-    const docRef = doc(this.fire, "usuarios", id);
-    return updateDoc(docRef,{estado: value});
+  updateProfesional(id: string, value: string) {
+    const docRef = doc(this.fire, 'usuarios', id);
+    return updateDoc(docRef, { estado: value });
   }
-
 
   getProfesionales(): Observable<Profesional[]> {
     const collRef = collection(this.fire, 'usuarios');
@@ -73,7 +77,6 @@ export class ClinicaService {
     );
     return addDoc(aCollection, especialidad);
   }
- 
 
   //Especialidadesa
   addEspecialidadProfecional(especialidadID: string, id: string) {
@@ -86,15 +89,25 @@ export class ClinicaService {
   }
   getEspecialidad(): Observable<Especialidad[]> {
     const collRef = collection(this.fire, 'especialidades');
-    return collectionData(collRef, { idField: 'id' }) as Observable<Especialidad[]>;
+    return collectionData(collRef, { idField: 'id' }) as Observable<
+      Especialidad[]
+    >;
   }
-  getEspecialidadProfesional(id: string):Observable<[]> {
+  getEspecialidadProfesional(id: string): Observable<[]> {
     const collRef = collection(this.fire, `usuarios/${id}/especialidades`);
     return collectionData(collRef, { idField: 'id' }) as Observable<[]>;
   }
-//administrador
-  addAdministrador(user: Administrador) {
+  //administrador
+  async addAdministrador(user: Administrador, id: string) {
     const collRef = collection(this.fire, 'usuarios');
-    return addDoc(collRef, user);
+    const docRef = doc(collRef, id);
+    return await setDoc(docRef, user);
+  }
+  //usuario
+  async getUserByID(id: string) {
+    const collRef = collection(this.fire, 'usuarios');
+    const docRef = doc(collRef, id);
+
+    return await getDoc(docRef);
   }
 }
