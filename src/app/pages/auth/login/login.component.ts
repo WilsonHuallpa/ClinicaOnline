@@ -5,11 +5,31 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { FireErrorService } from 'src/app/services/fire-error.service';
 import { ClinicaService } from 'src/app/services/clinica.service';
-
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  animations: [
+    trigger('enterState',[
+      state('void',style({
+        transform: 'translateX(100%)',
+        opacity:0
+      })),
+      transition(':enter',[
+        animate(500,style({
+          transform:'translateX(0)',
+          opacity:1
+        }))
+      ])
+    ])
+  ]
 })
 export class LoginComponent {
   loginUsuario: FormGroup;

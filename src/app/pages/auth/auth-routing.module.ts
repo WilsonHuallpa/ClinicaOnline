@@ -6,12 +6,17 @@ import { RegisterComponent } from './register/register.component';
 import { VerificarCorreoComponent } from './verificar-correo/verificar-correo.component';
 const routes: Routes = [
   {
-    path: '',
+    path: '', redirectTo: 'bienvenido', pathMatch: 'full'
+  },
+  {
+    path: 'bienvenido',
     component: WelcomenComponent,
+    data: {animation: 'Bienvenido'}
   },
   {
     path: 'login',
     component: LoginComponent,
+    data: {animation: 'Login'}
   },
   {
     path: 'register',

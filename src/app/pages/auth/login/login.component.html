@@ -1,4 +1,4 @@
-<div class="container-login ">
+<div class="container-login" @enterState>
     <div class="d-flex justify-content-center align-items-center mt-4">
       <div *ngIf="!loading" class="card" style="width: 400px">
         <div class="card-body">
@@ -70,11 +70,12 @@
             </p>
           </div>
         </div>
-        <div class="btn-group" role="group" aria-label="Basic example">
+        <div class="btn-group" role="group" aria-label="Basic example" >
           <button
             type="button"
             (click)="quickAccess('wilson@gmail.com', '123456')"
             class="btn btn-primary"
+          
           >
             wilson
           </button>
