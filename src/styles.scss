@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+#paciente-contenedor {
+  // background-image: linear-gradient(#33658a, #c8d4d9, #dbe9ee);
+  background-image: url("./assets/profesional.jpg");
+  background-size: cover;
+}
+.contenedor-mayor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 95vh;
+  padding-top: 3rem;
+}
+.contenedor-menor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 2rem 3rem;
+  margin-bottom: 3rem;
+  // background: rgba(10, 10, 10, .9);
+  // border-radius: .6rem;
+}
+.fondo-oscuro {
+  background: rgba(10, 10, 10, .9);
+  border-radius: .6rem;
+}
+
+.centrado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

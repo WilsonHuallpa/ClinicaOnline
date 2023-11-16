@@ -108,7 +108,7 @@ export class AltaPacientesComponent implements OnInit {
     const snapshot = await uploadBytes(imgRef, file);
     return await getDownloadURL(imgRef);
   }
-  async verificarCorreo() {
-    this.auth.getUserLogged();
-  }
+  // async verificarCorreo() {
+  //   this.auth.getUserLogged();
+  // }
 }

@@ -5,24 +5,30 @@ import { RouterModule } from '@angular/router';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { TablaEspecialidadComponent } from './tabla-especialidad/tabla-especialidad.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MenuClinicaComponent } from './menu-clinica/menu-clinica.component';
 import { ListProfPendientesComponent } from './list-prof-pendientes/list-prof-pendientes.component';
 import { ModalUsuarioComponent } from './modal-usuario/modal-usuario.component';
 import { AltaPacientesComponent } from './Altas/alta-pacientes/alta-pacientes.component';
 import { AltaProfesionalesComponent } from './Altas/alta-profesionales/alta-profesionales.component';
 import { AltaAdminComponent } from './Altas/alta-admin/alta-admin.component';
+import { FavbuttonComponent } from './favbutton/favbutton.component';
+import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
+import { SolicitarTurnoComponent } from './solicitar-turno/solicitar-turno.component';
+import { MisTurnosComponent } from './mis-turnos/mis-turnos.component';
 
 @NgModule({
   declarations: [
     LayoutComponent,
     SpinnerComponent,
     TablaEspecialidadComponent,
-    MenuClinicaComponent,
     ListProfPendientesComponent,
     ModalUsuarioComponent,
     AltaPacientesComponent,
     AltaProfesionalesComponent,
-    AltaAdminComponent
+    AltaAdminComponent,
+    FavbuttonComponent,
+    MiPerfilComponent,
+    SolicitarTurnoComponent,
+    MisTurnosComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +43,11 @@ import { AltaAdminComponent } from './Altas/alta-admin/alta-admin.component';
     ListProfPendientesComponent,
     AltaPacientesComponent,
     AltaProfesionalesComponent,
-    AltaAdminComponent
+    AltaAdminComponent,
+    FavbuttonComponent,
+    MiPerfilComponent,
+    SolicitarTurnoComponent,
+    MisTurnosComponent
   ]
 })
 

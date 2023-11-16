@@ -16,13 +16,19 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () =>
       import('./pages/admin/admin.module').then((m) => m.AdminModule),
+      data: {animation: 'Admin'}
   },
   {
-    path: 'Profesional',
+    path: 'profesional',
     loadChildren: () =>
       import('./pages/profesional/profesional.module').then(
         (m) => m.ProfesionalModule
       ),
+  },
+  {
+    path: 'paciente',
+    // canActivate: [VerifiedGuard, PacienteGuard],
+    loadChildren: () => import('./pages/paciente/paciente.module').then(m => m.PacienteModule)
   },
 ];
 

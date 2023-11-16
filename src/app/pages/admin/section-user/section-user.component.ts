@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Item } from 'src/app/components/layout/layout.component';
 import { Profesional } from 'src/app/interfaces/Profesional';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClinicaService } from 'src/app/services/clinica.service';
@@ -15,7 +16,18 @@ export class SectionUserComponent implements OnInit {
   isProfesionalActive: boolean = false;
   isAdmin: boolean = false; 
   constructor(private clinicaFire: ClinicaService, private auth: AuthService, private router: Router) {}
-
+  items: Item[] = [
+    {
+      title: 'Inicio',
+      link: '/',
+      active: true,
+    },
+    {
+      title: 'Admin',
+      link: '/admin',
+      active: true
+    }
+  ]
   logout() {
     this.auth.logout().then(() => {
       this.router.navigate(['/auth']);

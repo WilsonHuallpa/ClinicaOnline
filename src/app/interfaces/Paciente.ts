@@ -10,4 +10,5 @@ export interface Paciente {
     imagen: string,
     imagen2: string,
     rol: string,
+    historiaClinica?: any;
 }

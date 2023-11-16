@@ -8,5 +8,7 @@ export interface Profesional {
     password: string,
     imagen: string,
     estado: string,
+    agenda?: boolean[],
+    especialidades?: string[];
     rol: string,
 }

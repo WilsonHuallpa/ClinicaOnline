@@ -40,14 +40,21 @@ export class ClinicaService {
   // Apaciente
   addPaciente(paciente: Paciente, id: string) {
     const collRef = collection(this.fire, 'usuarios');
+
     const docRef = doc(collRef, id);
     return setDoc(docRef, paciente);
   }
   getPaciente(): Observable<Paciente[]> {
     const collRef = collection(this.fire, 'usuarios');
-    return collectionData(collRef, { idField: 'id' }) as Observable<Paciente[]>;
+    const q = query(
+      collRef,
+      where('rol', '==', 'Paciente'));
+    return collectionData(q, { idField: 'id' }) as Observable<Paciente[]>;
   }
-
+  updatePaciente(id: string, historiaClinica: any) {
+    const docRef = doc(this.fire, 'usuarios', id);
+    return updateDoc(docRef, {  historiaClinica: historiaClinica });
+  }
   // Profesionales
   addProfesional(profesional: Profesional, id: string) {
     const collRef = collection(this.fire, 'usuarios');
@@ -66,10 +73,18 @@ export class ClinicaService {
       where('rol', '==', 'Profesional'),
       where('estado', '==', 'Pendiente')
     );
-
     return collectionData(q, { idField: 'id' }) as Observable<Profesional[]>;
   }
-
+  getProFesionalPorEspecialidad(especialidad: string):Observable<Profesional[]>{
+    const collRef = collection(this.fire, 'usuarios');
+    const q = query(
+      collRef,
+      where('rol', '==', 'Profesional'),
+      where('especialidades', 'array-contains', especialidad)
+    );
+    return collectionData(q, { idField: 'id' }) as Observable<Profesional[]>;
+  }
+    
   addProfesionalEspecialidad(idprofesional: string, especialidad: any) {
     const aCollection = collection(
       this.fire,

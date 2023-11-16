@@ -96,8 +96,8 @@ export class AltaAdminComponent implements OnInit{
     return await getDownloadURL(imgRef);
   }
 
-  async verificarCorreo(){
-    const user = await this.auth.getUserLogged();
-    console.log(user)
-  }
+  // async verificarCorreo(){
+  //   const user = await this.auth.getUserLogged();
+  //   console.log(user)
+  // }
 }

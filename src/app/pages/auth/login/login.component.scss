@@ -1,6 +1,14 @@
 .container-login {
-  background: black;
-  height: 100vh;
-  text-align: center;
-  color: #fff;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("./../../../../assets/register.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+.arrow-icon {
+  width: 40px; /* Ajusta el ancho según tus necesidades */
+  height: 40px; /* Ajusta la altura según tus necesidades */
+  margin-right: 5px; /* Espaciado a la derecha del botón */
+  
 }

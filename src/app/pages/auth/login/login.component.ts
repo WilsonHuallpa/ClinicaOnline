@@ -51,6 +51,8 @@ export class LoginComponent {
   login() {
     const email = this.loginUsuario.value.email;
     const password = this.loginUsuario.value.password;
+    console.log(email)
+    console.log(password)
     this.loading = true;
     this.authUser
       .loginUser(email, password)
@@ -62,7 +64,7 @@ export class LoginComponent {
           return;
         }
         const rol = user['rol'];
-        if (rol == 'Profesional') this.vericargarStatus(user['estado']);
+        if (rol == 'profesional') this.vericargarStatus(user['estado']);
         this.redirectoPage(rol);
         this.loading = false;
       })
@@ -76,9 +78,10 @@ export class LoginComponent {
       });
   }
   quickAccess(email: string, password: string) {
+
     this.loginUsuario.setValue({
-      email: email,
-      password: password,
+      email,
+      password
     });
   }
   redirectoPage(profile: string) {
@@ -87,10 +90,10 @@ export class LoginComponent {
         this.router.navigate(['/admin']);
         break;
       case 'Paciente':
-        this.router.navigate(['/Profesional']);
+        this.router.navigate(['/paciente']);
         break;
       case 'Profesional':
-        this.router.navigate(['/Profesional']);
+        this.router.navigate(['/profesional']);
         break;
     }
   }
@@ -99,5 +102,8 @@ export class LoginComponent {
       throw new Error('El usuario esta Pendiente. Se requiere Aprobación.');
     if (status == 'Rechazado')
       throw new Error('El usuario fue rechazado. Lo siento!');
+  }
+  goBack(){
+    this.router.navigate(['/auth']);
   }
 }
