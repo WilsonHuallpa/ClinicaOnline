@@ -14,6 +14,7 @@ import { FavbuttonComponent } from './favbutton/favbutton.component';
 import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 import { SolicitarTurnoComponent } from './solicitar-turno/solicitar-turno.component';
 import { MisTurnosComponent } from './mis-turnos/mis-turnos.component';
+import { TurnosSolicitarComponent } from './turnos-solicitar/turnos-solicitar.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MisTurnosComponent } from './mis-turnos/mis-turnos.component';
     FavbuttonComponent,
     MiPerfilComponent,
     SolicitarTurnoComponent,
-    MisTurnosComponent
+    MisTurnosComponent,
+    TurnosSolicitarComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +49,8 @@ import { MisTurnosComponent } from './mis-turnos/mis-turnos.component';
     FavbuttonComponent,
     MiPerfilComponent,
     SolicitarTurnoComponent,
-    MisTurnosComponent
+    MisTurnosComponent,
+    TurnosSolicitarComponent
   ]
 })
 

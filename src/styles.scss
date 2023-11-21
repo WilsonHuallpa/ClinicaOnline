@@ -1,8 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
-#paciente-contenedor {
-  // background-image: linear-gradient(#33658a, #c8d4d9, #dbe9ee);
-  background-image: url("./assets/profesional.jpg");
+
+body {
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+  url("./assets/register.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
   background-size: cover;
+  height: 100vh;
+ 
 }
 .contenedor-mayor {
   display: flex;
@@ -22,10 +26,10 @@
   // background: rgba(10, 10, 10, .9);
   // border-radius: .6rem;
 }
-.fondo-oscuro {
-  background: rgba(10, 10, 10, .9);
-  border-radius: .6rem;
-}
+// .fondo-oscuro {
+//   background: rgba(10, 10, 10, .9);
+//   border-radius: .6rem;
+// }
 
 .centrado {
   display: flex;

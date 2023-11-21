@@ -11,6 +11,11 @@ export class AdminComponent {
   constructor() {
     this.items = [
       {
+        title: 'Inicio',
+        link: 'inicio',
+        active: false,
+      },
+      {
         title: 'Mi Perfil',
         link: 'mi-perfil',
         active: false,

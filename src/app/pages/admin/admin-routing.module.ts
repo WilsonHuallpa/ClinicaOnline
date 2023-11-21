@@ -11,6 +11,8 @@ const routes: Routes = [
     path: '',
     component: AdminComponent,
     children: [
+      { path: '', component: SectionUserComponent },
+      { path: 'inicio', component: SectionUserComponent },
       { path: 'mi-perfil', component: MiPerfilComponent },
       { path: 'mis-turnos', component: MisTurnosComponent },
       { path: 'solicitar-turno', component: SolicitarTurnoComponent },

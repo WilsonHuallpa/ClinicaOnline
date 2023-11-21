@@ -3,4 +3,5 @@ export default interface Especialidad {
     nombre: string,
     description: string,
     estado: string,
+    img:string,
 }

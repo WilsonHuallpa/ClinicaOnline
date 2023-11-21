@@ -1,11 +1,6 @@
 <div>
-  <app-list-prof-pendientes
-    [profPendientes]="profPendientes"
-    (onAceptarRechazar)="onAceptarRechazar($event.id, $event.value)"
-  />
-  
   <div class="container">
-    <h4 class="border-bottom pb-2 mb-0">Alta de Usuarios</h4>
+    <h2 class="border-bottom pb-2 mt-4">Alta de Usuarios</h2>
     <div class="card">
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
@@ -48,6 +43,10 @@
       </div>
     </div>
   </div>
+  <app-list-prof-pendientes
+    [profPendientes]="profPendientes"
+    (onAceptarRechazar)="onAceptarRechazar($event.id, $event.value)"
+  />
 </div>
 
 <!-- <body>

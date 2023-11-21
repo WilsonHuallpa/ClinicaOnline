@@ -1,5 +1,5 @@
-<div *ngIf="usuario">
-    <!-- Desarrollar mas tarde -->
+<div  *ngIf="usuario">
+    <!-- Desarrollar mas tarde --> 
     <div *ngIf="usuario.rol === 'Paciente'" class="card mb-3 text-dark" style="max-width: 540px;">        
         <div class="row g-0">
             <div class="col-md-4">
@@ -77,11 +77,12 @@
     >
     </app-mis-horarios> -->
 
-    <div *ngIf="usuario.rol === 'administrador'">        
+    <div *ngIf="usuario.rol === 'Administrador'"> 
+
         <div class="card mb-3 text-dark" style="max-width: 1000px;">
             <div class="row g-0">
                 <div class="col-md-4">
-                    <img [src]="usuario.foto" class="img-fluid rounded-start">
+                    <img [src]="usuario.imagen" class="img-fluid rounded-start">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -92,5 +93,6 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>

@@ -49,14 +49,14 @@
                     <th>Motivo</th>
                 </tr>
                 <tr *ngFor="let turno of turnos; let i = index">
-                    <td>{{turno.fecha.toDate() | date:'MM/dd HH:mm'}}</td>
+                    <!-- <td>{{turno.fecha.toDate() | date:'MM/dd HH:mm'}}</td> -->
                     <td *ngIf="miRol === 'paciente' || miRol === 'administrador'">
                         <!-- |doctor -->
-                        {{turno.especialista }}
+                        <!-- {{turno.especialista }} -->
                     </td>
                     <td *ngIf="miRol === 'especialista' || miRol === 'administrador'">
-                        {{turno.paciente.nombre}}
-                        {{turno.paciente.apellido}}
+                        <!-- {{turno.paciente.nombre}}
+                        {{turno.paciente.apellido}} -->
                     </td>
                     <td>{{turno.especialidad}}</td>
                     <td>{{turno.estado | uppercase}}</td>

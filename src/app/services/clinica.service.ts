@@ -18,6 +18,7 @@ import { Paciente } from '../interfaces/Paciente';
 import { Profesional } from '../interfaces/Profesional';
 import Especialidad from '../interfaces/Especialidad';
 import Administrador from '../interfaces/Administrador';
+import Reserva from '../interfaces/Reserva';
 
 @Injectable({
   providedIn: 'root',
@@ -91,6 +92,10 @@ export class ClinicaService {
       `peliculas/${idprofesional}/especialidades`
     );
     return addDoc(aCollection, especialidad);
+  }
+  getHorariosDisponibles(id:string): Observable<Reserva[]>{
+    const collRef = collection(this.fire, `usuarios/${id}/horariosDisponibles`);
+    return collectionData(collRef, { idField: 'id' }) as Observable<Reserva[]>
   }
 
   //Especialidadesa
