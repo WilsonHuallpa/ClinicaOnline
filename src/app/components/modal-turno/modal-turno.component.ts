@@ -23,11 +23,13 @@ export class ModalTurnoComponent implements OnInit {
   }
   cancelarTurno() {
     if(this.data && this.data.id){
-      if(this.estado === 'cancelar'){
+      if(this.estado === 'cancelar' || this.estado === 'rechazado'){
         this.data.razon = this.mensaje;
         this.data.estado = 'cancelado';
-      }else if(this.estado === 'calificar'){
+      }else if(this.estado === 'calificar' || this.estado === 'encuesta'){
         this.data.reviewPac = this.mensaje
+      }else if(this.estado === 'finalizado'){
+        this.data.reviewEsp = this.mensaje
       }
       this.turnoServices.actualizar(this.data.id, this.data).then(() =>{
         this.closeModal.emit();

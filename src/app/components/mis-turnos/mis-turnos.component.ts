@@ -4,7 +4,7 @@ import { ClinicaService } from 'src/app/services/clinica.service';
 import { OtroService } from 'src/app/services/otro.service';
 import { ReservaService } from 'src/app/services/reserva.service';
 import { TurnoService } from 'src/app/services/turno.service';
-export type Estado = 'cancelar' | 'resena' | 'calificar' | 'encuesta';
+export type Estado = 'cancelar' | 'resena' | 'calificar' | 'encuesta' | 'rechazado' | 'finalizado';
 @Component({
   selector: 'app-mis-turnos',
   templateUrl: './mis-turnos.component.html',
@@ -19,10 +19,9 @@ export class MisTurnosComponent {
   miRol: string = '';
   miUID: string = '';
   idTipo: string = '';
-
+  loading: boolean = false;
   constructor(
     private turnoService: TurnoService,
-    private reservaService: ReservaService,
     private otroService: OtroService,
     private usuarioService: ClinicaService) { }
 
@@ -62,24 +61,16 @@ export class MisTurnosComponent {
       this.turnoService.getTurnoPorid(idTipo, miUID).subscribe(data => this.turnos = data)
     }
     especialistaFiltrar() {
-      if (this.filtro === '') {
-        this.turnos = this.turnosOriginal.slice();
+      if (this.filtro) {
+        this.turnos = this.turnos.filter(turno =>
+          turno.especialidad.toLowerCase().includes(this.filtro.toLowerCase()) ||
+          turno.paciente.nombre.toLowerCase().includes(this.filtro.toLowerCase()) ||
+          turno.paciente.apellido.toLowerCase().includes(this.filtro.toLowerCase())
+        );
       } else {
-        const filtrados: any[] = [];
-        this.turnosOriginal.forEach(turno => {
-          if (
-            turno.especialidad.includes(this.filtro) ||
-            (turno.especialista &&
-              (turno.especialista.nombre.includes(this.filtro) ||
-                turno.especialista.apellido.includes(this.filtro)))
-          ) {
-            filtrados.push(turno);
-          }
-        });
-        this.turnos = filtrados.slice();
+        this.obtenerTurnos(this.idTipo, this.miUID)
       }
     }
-
     cancelarTurnoHandler(turno: Turno | null) {
       this.estado = 'cancelar';
       this.turnoSeleccionado = turno;
@@ -99,14 +90,25 @@ export class MisTurnosComponent {
       this.estado = 'encuesta';
       this.turnoSeleccionado = turno;
     }
+
     rechazarTurnoHandler(turno: Turno | null) {
-     
+      this.estado = 'rechazado';
+      this.turnoSeleccionado = turno;
     }
-    aceptarTurnoHandler(turno:  Turno | null) {
-     
+    aceptarTurnoHandler(turno:  Turno ) {
+      if(turno.id){
+        this.loading = true;
+        turno.estado = 'aceptado'
+        this.turnoService.actualizar(turno.id, turno).then(() =>{
+          this.loading = false;
+        }).catch((err) => {
+          console.log(err)
+        })
+      }
     }
 
-    finalizarTurnoHandler(turno:  Turno | null) {
+    finalizarTurnoHandler(turno: Turno | null) {
+      this.estado = 'finalizado';
       this.turnoSeleccionado = turno;
     }
 

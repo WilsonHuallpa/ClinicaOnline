@@ -10,7 +10,7 @@
   <div class="card-body">
     <h2
       class="card-title text-center"
-      *ngIf="miRol === 'Paciente' || miRol === 'Especialista'"
+      *ngIf="miRol === 'Paciente' || miRol === 'Profesional'"
     >
       Mis turnos
     </h2>
@@ -31,8 +31,8 @@
           appEjercicioC
         />
       </div>
-      <!-- pendiente filtro de especilista -->
-      <div *ngIf="miRol === 'Especialista'" class="mb-4">
+
+      <div *ngIf="miRol === 'Profesional'" class="mb-4">
         <label class="mb-2"> Buscar por especialidad o paciente </label>
         <input
           [(ngModel)]="filtro"
@@ -47,7 +47,7 @@
           <th *ngIf="miRol === 'Paciente' || miRol === 'Administrador'">
             Especialista
           </th>
-          <th *ngIf="miRol === 'Especialista' || miRol === 'Administrador'">
+          <th *ngIf="miRol === 'Profesional' || miRol === 'Administrador'">
             Paciente
           </th>
           <th>Especialidad</th>
@@ -60,7 +60,7 @@
           <td *ngIf="miRol === 'Paciente' || miRol === 'Administrador'">
             {{ turno.especialista | doctor }}
           </td>
-          <td *ngIf="miRol === 'Especialista' || miRol === 'Administrador'">
+          <td *ngIf="miRol === 'Profesional' || miRol === 'Administrador'">
             {{ turno.paciente.nombre }}
             {{ turno.paciente.apellido }}
           </td>
@@ -68,22 +68,39 @@
           <td>{{ turno.estado | uppercase }}</td>
           <td class="tdMotivo">{{ turno.razon }}</td>
           <td *ngIf="turno.estado === 'reservado'">
-            <button class="btn btn-danger" (click)="cancelarTurnoHandler(turno)">
+            <button
+              class="btn btn-danger"
+              (click)="cancelarTurnoHandler(turno)"
+            >
               Cancelar
             </button>
           </td>
-          <td *ngIf="(miRol === 'Paciente' && turno.reviewEsp) || (miRol === 'Especialista' && turno.reviewPac)">
+          <td
+            *ngIf="
+              (miRol === 'Paciente' && turno.reviewEsp) ||
+              (miRol === 'Profesional' && turno.reviewPac)
+            "
+          >
             <button class="btn btn-info" (click)="verReviewHandler(turno)">
               Ver reseña
             </button>
           </td>
 
           <td *ngIf="turno.estado === 'realizado' && miRol === 'Paciente'">
-            <button class="btn btn-outline-light"
-            (click)="completarEncuestaHandler(turno)"
-            >Completar encuesta</button>
+            <button
+              class="btn btn-outline-light"
+              (click)="completarEncuestaHandler(turno)"
+            >
+              Completar encuesta
+            </button>
           </td>
-          <td *ngIf=" turno.estado === 'realizado' && miRol === 'Paciente' &&!turno.reviewPac">
+          <td
+            *ngIf="
+              turno.estado === 'realizado' &&
+              miRol === 'Paciente' &&
+              !turno.reviewPac
+            "
+          >
             <button
               class="btn btn-outline-info"
               (click)="calificarAtencionHandler(turno)"
@@ -92,7 +109,7 @@
             </button>
           </td>
 
-          <td *ngIf="turno.estado === 'reservado' && miRol === 'Especialista'">
+          <td *ngIf="turno.estado === 'reservado' && miRol === 'Profesional'">
             <button
               class="btn btn-outline-danger"
               (click)="rechazarTurnoHandler(turno)"
@@ -100,7 +117,7 @@
               Rechazar
             </button>
           </td>
-          <td *ngIf="turno.estado === 'reservado' && miRol === 'Especialista'">
+          <td *ngIf="turno.estado === 'reservado' && miRol === 'Profesional'">
             <button
               class="btn btn-success"
               (click)="aceptarTurnoHandler(turno)"
@@ -108,7 +125,7 @@
               Aceptar
             </button>
           </td>
-          <td *ngIf="turno.estado === 'aceptado' && miRol === 'Especialista'">
+          <td *ngIf="turno.estado === 'aceptado' && miRol === 'Profesional'">
             <button
               class="btn btn-light"
               (click)="finalizarTurnoHandler(turno)"
@@ -152,43 +169,18 @@
     (closeModal)="completarEncuestaHandler(null)"
   >
   </app-modal-turno>
-  <!-- <app-cancelar-turno
-        *ngIf="modoCancelar"
-        [turno]="turnoSeleccionado"
-        [rol]="miRol"
-        (volver)="volverHandler()"
-        (cancelar)="cancelarConfirmarHandler($event)"
-    > -->
-  <!-- </app-cancelar-turno>
-
-    <app-rechazar-turno
-        *ngIf="modoRechazar"
-        [turno]="turnoSeleccionado"
-        (volver)="volverHandler()"
-        (rechazar)="rechazarConfirmarHandler($event)"
-    >
-    </app-rechazar-turno>
-
-    <app-finalizar-turno
-        *ngIf="modoFinalizar"
-        [turno]="turnoSeleccionado"
-        (volver)="volverHandler()"
-        (finalizar)="finalizarConfirmarHandler($event)"
-    >
-    </app-finalizar-turno>
-
-    <app-review
-        *ngIf="modoReview"
-        [turno]="turnoSeleccionado"
-        [rol]="miRol"
-        (volver)="volverHandler()"
-    >
-    </app-review>
-
-    <app-calificar-atencion
-        *ngIf="modoCalificarAtencion"
-        (volver)="volverHandler()"
-        (calificar)="calificarConfirmarHandler($event)"
-    >
-    </app-calificar-atencion> -->
+  <app-modal-turno
+    *ngIf="turnoSeleccionado && estado == 'rechazado'"
+    [data]="turnoSeleccionado"
+    [estado]="estado"
+    (closeModal)="rechazarTurnoHandler(null)"
+  >
+  </app-modal-turno>
+  <app-modal-turno
+    *ngIf="turnoSeleccionado && estado == 'finalizado'"
+    [data]="turnoSeleccionado"
+    [estado]="estado"
+    (closeModal)="finalizarTurnoHandler(null)"
+  >
+  </app-modal-turno>
 </div>

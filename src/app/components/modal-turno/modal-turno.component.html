@@ -6,7 +6,17 @@
           ¿Esta seguro que deseas cancelar?
         </h4>
         <h4 *ngIf="estado === 'resena'" class="modal-title">Ver reseña</h4>
-        <h4 *ngIf="estado === 'calificar'" class="modal-title">Calificar Atención</h4>
+        <h4 *ngIf="estado === 'calificar'" class="modal-title">
+          Calificar Atención
+        </h4>
+        <h4 *ngIf="estado === 'encuesta'" class="modal-title">Encuesta</h4>
+        <h4 *ngIf="estado === 'rechazado'" class="modal-title">
+          Rechazar Turno
+        </h4>
+        <h4 *ngIf="estado === 'finalizado'" class="modal-title">
+          Finalizar Turno
+        </h4>
+
         <button
           type="button"
           class="btn-close"
@@ -29,12 +39,55 @@
               ></textarea>
             </div>
           </div>
-          <div *ngIf="estado === 'resena' ">
-            <p>{{data?.reviewEsp}}</p>
+          <div *ngIf="estado === 'resena'">
+            <p>{{ data?.reviewEsp }}</p>
           </div>
           <div *ngIf="estado === 'calificar'">
-            <p>Debe dejar un comentario de como fue la
-              atención del Especialista.</p>
+            <p>
+              Debe dejar un comentario de como fue la atención del Especialista.
+            </p>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Message:</label>
+              <textarea
+                class="form-control"
+                id="message-text"
+                name="mensajeCancelacion"
+                [(ngModel)]="mensaje"
+              ></textarea>
+            </div>
+          </div>
+          <div *ngIf="estado === 'encuesta'">
+            <p>¿Por que razon nos recomendarias?</p>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Message:</label>
+              <textarea
+                class="form-control"
+                id="message-text"
+                name="mensajeCancelacion"
+                [(ngModel)]="mensaje"
+              ></textarea>
+            </div>
+          </div>
+          <div *ngIf="estado === 'rechazado'">
+            <p>
+              Para rechazar el turno se debe dejar un comentario del porque se
+              rechaza el mismo.
+            </p>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Message:</label>
+              <textarea
+                class="form-control"
+                id="message-text"
+                name="mensajeCancelacion"
+                [(ngModel)]="mensaje"
+              ></textarea>
+            </div>
+          </div>
+          <div *ngIf="estado === 'finalizado'">
+            <p>
+              Para finalizar el turno se debe dejar una reseña o comentario de
+              la consulta y diagnóstico realizado.
+            </p>
             <div class="mb-3">
               <label for="message-text" class="col-form-label">Message:</label>
               <textarea
@@ -57,7 +110,13 @@
           Cancelar
         </button>
         <button
-          *ngIf="estado == 'cancelar'"
+          *ngIf="
+            estado == 'cancelar' ||
+            estado == 'calificar' ||
+            estado == 'encuesta' ||
+            estado == 'rechazado'||
+            estado == 'finalizado'
+          "
           type="button"
           class="btn btn-danger"
           [disabled]="!isMensajePresente()"
