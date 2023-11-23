@@ -9,7 +9,6 @@ import { OtroService } from 'src/app/services/otro.service';
 export class MiPerfilComponent implements OnInit{
   usuario: any;
   verHistoriaClinica: boolean = false;
-  verMisHorarios: boolean = false;
   verMisAtenciones: boolean = false;
   constructor(private otroService: OtroService) { }
 
@@ -20,23 +19,13 @@ export class MiPerfilComponent implements OnInit{
 );
   }
   verMisAtencionesHandler() {
-    this.verMisAtenciones = true;
+  
   }
-  ocultarMisAtencionesHandler() {
-    this.verMisAtenciones = false;
-  }
-
+  
   verMisHorariosHandler() {
-    this.verMisHorarios = true;
+    
   }
-  ocultarMisHorariosHandler() {
-    this.verMisHorarios = false;
+  verMiHistoriaClinicaHandler() {
   }
 
-  verMiHistoriaClinicaHandler() {
-    this.verHistoriaClinica = true;
-  }
-  ocultarMiHistoriaClinicaHandler() {
-    this.verHistoriaClinica = false;
-  }
 }
