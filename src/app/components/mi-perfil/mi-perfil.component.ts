@@ -16,7 +16,6 @@ export class MiPerfilComponent implements OnInit{
   ngOnInit(): void {
     this.otroService.getDataDeUsuario().subscribe(data => {
       this.usuario = data
-      console.log(this.usuario)
     }
 );
   }

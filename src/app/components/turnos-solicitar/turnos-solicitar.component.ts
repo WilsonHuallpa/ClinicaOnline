@@ -6,11 +6,13 @@ import {
   FormBuilder,
 } from '@angular/forms';
 import Especialidad from 'src/app/interfaces/Especialidad';
+import { Paciente } from 'src/app/interfaces/Paciente';
 import { Profesional } from 'src/app/interfaces/Profesional';
 import Reserva from 'src/app/interfaces/Reserva';
 import { Turno } from 'src/app/interfaces/Turno';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClinicaService } from 'src/app/services/clinica.service';
+import { OtroService } from 'src/app/services/otro.service';
 import { TurnoService } from 'src/app/services/turno.service';
 
 @Component({
@@ -26,14 +28,15 @@ export class TurnosSolicitarComponent implements OnInit {
   selectedEspecialidad: string = '';
 
   especialidadDetails!: FormGroup;
-  img: string = '../../assets/icon-clinica.png'
+  img: string = '../../assets/icon-clinica.png';
   profesionales: Profesional[] = [];
   selectedProfesional: Profesional | null = null;
+  selectedPaciente!: any;
 
   reservasProfesional: Reserva[] = [];
   selectedReserva: Reserva | null = null;
 
-  fecha:string= ''
+  fecha: string = '';
   selecHora: string = '';
   turnoSolicitado!: Turno;
   especialida_step = false;
@@ -41,19 +44,30 @@ export class TurnosSolicitarComponent implements OnInit {
   fecha_step = false;
   hora_step = false;
   confirmar_step = false;
-
+  miRol: string = '';
   step = 1;
   constructor(
     private formBuilder: FormBuilder,
     private clinicaFire: ClinicaService,
     private authFire: AuthService,
-    private turnosFire: TurnoService
+    private turnosFire: TurnoService,
+    private otroService: OtroService
   ) {}
 
   ngOnInit() {
-    this.authFire.getUserID().subscribe((uid) => {
-      this.idPac = uid;
-    });
+    this.otroService.getDocumentSnapshotDeUsuario().subscribe(
+      ds => {
+      this.miRol = ds.data().rol;
+        if(this.miRol == 'Administrador'){
+          //Ya veremos que q va ser el administradoR
+        }else if(this.miRol == 'Paciente'){
+          this.clinicaFire.getUserByID(ds.id).then(resp => {
+            this.idPac = ds.id;
+            this.selectedPaciente = resp.data() as Paciente;
+          })
+        }
+      }
+    )
     this.clinicaFire.getEspecialidad().subscribe((resp) => {
       this.especialidades = resp;
     });
@@ -106,26 +120,32 @@ export class TurnosSolicitarComponent implements OnInit {
 
   submit() {
     this.loading = true;
-    this.turnosFire.add(this.turnoSolicitado).then(() => {
-      this.loading = false;
-      console.log('se agrego correctament')
-    }).catch((er) => {
-      this.loading = false;
-      console.log(er)
-
-    })
+    this.turnosFire
+      .add(this.turnoSolicitado)
+      .then(() => {
+        this.loading = false;
+        console.log('se agrego correctament');
+      })
+      .catch((er) => {
+        this.loading = false;
+        console.log(er);
+      });
   }
   onRellenarTurno() {
-    this.turnoSolicitado = {
-      idEsp: this.idEsp,
-      idPac: this.idPac, // Asumo que id es el id del paciente, ajusta según tu modelo
-      fecha: this.fecha,
-      hora: this.selecHora,
-      especialidad: this.especialidadDetails.value.especialidad, // Ajusta según tu modelo
-      estado: 'Pendiente', // Ajusta según tus necesidades
-      reviewEsp: '',
-      reviewPac: '',
-    };
+    if (this.selectedProfesional !== null) {
+      this.turnoSolicitado = {
+        idEsp: this.idEsp,
+        idPac: this.idPac,
+        especialista: this.selectedProfesional,
+        paciente: this.selectedPaciente,
+        fecha: this.fecha,
+        hora: this.selecHora,
+        especialidad: this.especialidadDetails.value.especialidad,
+        estado: 'reservado', 
+        reviewEsp: '',
+        reviewPac: '',
+      };
+    }
   }
   onEspecialidadSeleccionadaHandler(especialidad: string) {
     this.especialidadDetails.get('especialidad')?.setValue(especialidad);
@@ -135,8 +155,8 @@ export class TurnosSolicitarComponent implements OnInit {
         this.profesionales = profesionales;
       });
   }
-  onselectReserva(fecha:string, hora:string) {
-    this.fecha =fecha;
+  onselectReserva(fecha: string, hora: string) {
+    this.fecha = fecha;
     this.selecHora = hora;
   }
   onselectHora(hora: string) {

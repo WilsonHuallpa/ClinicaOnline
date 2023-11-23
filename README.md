@@ -1,27 +1,83 @@
-# ClinicaOnline
+# :hospital: Clínica OnLine
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
+Para quienes buscan brindar un servicio moderno,
+que facilite el intercambio paciente-profesional,
+sin contratiempos,
+presentamos la [Clínica OnLine](https://deluxe-concha-a062ef.netlify.app/auth/bienvenido):
 
-## Development server
+Un sistema de gestión de turnos ideado para instituciones dedicadas a la Salud,
+que les permite destacarse no sólo por la calidad de su atención médica,
+sino también por brindar una experiencia de usuario satisfactoria
+tanto a los pacientes como a especialistas y administradores.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Secciones
 
-## Code scaffolding
+**Primero se ingresa al sistema.**
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Una vez dentro, las diferentes secciones aquí expuestas son fácilmente accesibles a través del *menú*,
+visible a lo largo de toda la aplicación.
 
-## Build
+Cada tipo de usuario cuenta con un acceso personalizado acorde a su rol.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### :heavy_check_mark: Página de bienvenida
 
-## Running unit tests
+![alt text](./pantallas/bienvenida.png)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### :heavy_check_mark: Registro
 
-## Running end-to-end tests
+Disponible para pacientes y especialistas.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+![alt text](./pantallas/registroopciones.png)
 
-## Further help
+Luego de registrarse, los pacientes *deben verificar su correo electrónico*
+antes de ingresar por primera vez y los profesionales deben de estar aprobados por el administrador.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+<sup>Ejemplo:</sup>
+![alt text](./pantallas/registro.png)
+
+### :heavy_check_mark: Login
+
+Brinda acceso a pacientes, especialistas y administradores por igual,
+siempre y cuando se encuentren *verificados* o *habilitados*.
+
+![alt text](./pantallas/login.png
+### :heavy_check_mark: Solicitar turno
+
+Diseñada para que los pacientes puedan **pedir turno** en 3 simples pasos.
+
+Los administradores *también* pueden solicitar turno en nombre de algún paciente
+que así lo desee.
+
+![alt text](./pantallas/solicitarTurnos.png)
+
+### :heavy_check_mark: Turnos / Mis turnos
+
+Aquí, pacientes y especialistas pueden **ver sus turnos pendientes y realizados**, al detalle.
+
+Los administradores pueden ver *todos* los turnos de la clínica.
+
+![alt text](./pantallas/turnos.png)
+
+Además, desde esta sección se van a poder **administrar los turnos reservados**.
+
+Cualquier usuario puede, por ejemplo, **cancelar un turno** explicando el motivo:
+
+
+
+### :heavy_check_mark: Mi perfil
+
+Muestra la **información personal** del usuario logeado.
+
+![alt text](./pantallas/perfil.png)
+
+### :heavy_check_mark: Usuarios
+
+En esta sección, los administradores (sólo los administradores) pueden **ver información
+acerca de todos los usuarios**, habilitar o deshabilitar el acceso a especialistas...
+
+
+
+
+...y **generar nuevos usuarios** de *cualquier* tipo:
+
+

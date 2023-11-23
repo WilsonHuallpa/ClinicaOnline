@@ -141,8 +141,8 @@
               <div style="white-space: nowrap;">
                 <div *ngFor="let especialidad of especialidades" style="display: inline-block; white-space: normal; margin-right: 10px;">
                   <span class="badge rounded-pill text-bg-primary" style="font-size: 18px;">
-                    {{ especialidad.nombre }}
-                    <button class="btn-delete" (click)="eliminarElemento(especialidad?.id)">X</button>
+                    {{ especialidad }}
+                    <button class="btn-delete" (click)="eliminarElemento(especialidad)">X</button>
                   </span>
                 </div>
               </div>

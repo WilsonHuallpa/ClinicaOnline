@@ -4,8 +4,8 @@ export interface Turno {
     id?:string;
     idEsp: string;
     idPac: string;
-    // especialista: Profesional;
-    // paciente: Paciente;
+    especialista: Profesional;
+    paciente: Paciente;
     // fecha: Date;
     fecha: string;
     hora:string;

@@ -12,6 +12,7 @@ import {
   Validators,
 } from '@angular/forms';
 import Especialidad from 'src/app/interfaces/Especialidad';
+import { Profesional } from 'src/app/interfaces/Profesional';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClinicaService } from 'src/app/services/clinica.service';
 @Component({
@@ -23,7 +24,7 @@ export class AltaProfesionalesComponent {
   profesional: FormGroup;
   file: any;
   loading: boolean = false;
-  especialidades: Especialidad[] = [];
+  especialidades: string[] = [];
   constructor(
     private fb: FormBuilder,
     private clinicaFire: ClinicaService,
@@ -46,6 +47,7 @@ export class AltaProfesionalesComponent {
       mail: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       imagen: [''],
+      especialidades: this.fb.array([]),
       estado: ['Pendiente'],
       rol:['Profesional']
     });
@@ -77,22 +79,15 @@ export class AltaProfesionalesComponent {
       const password = this.profesional.value.password;
       const respuesta = await this.auth.registerUser(email, password);
       if(respuesta){
-        console.log('se creo un nuevo registro')
         const id = respuesta.user.uid;
         this.profesional.patchValue({ password: '' });
-        const profesional = this.profesional.value;
+        const profesional = this.profesional.value as Profesional;
+        profesional.especialidades = this.especialidades;
         await this.clinicaFire.addProfesional(profesional, id);
-        if(this.especialidades.length > 0){
-          for(const especialidad of this.especialidades) {
-            if(especialidad.id){
-              this.clinicaFire.addEspecialidadProfecional(especialidad.id, id)
-            }
-          }
-        }
         this.profesional.reset();
       }
-      
     } catch (error) {
+      //INdentifico que el correo ya ha sido utilizado.
       console.log('Error: ', error);
     } finally {
       this.loading = false;
@@ -105,16 +100,13 @@ export class AltaProfesionalesComponent {
   }
 
   seleccionarEspecialidad(especialidad: Especialidad) {
-    const existe = this.especialidades.find((a) => a.id === especialidad.id);
-
+    const existe = this.especialidades.find((a) => a === especialidad.nombre);
     if (!existe) {
-      this.especialidades.push(especialidad);
+      this.especialidades.push(especialidad.nombre);
     }
-    console.log('actores: ', this.especialidades)
+
   }
-  eliminarElemento(id: string | undefined) {
-    if (id) {
-      this.especialidades = this.especialidades.filter(especialidad => especialidad.id !== id);
-    }
+  eliminarElemento(name: string ) {
+    this.especialidades = this.especialidades.filter(especialidad => especialidad !== name);
   }
 }

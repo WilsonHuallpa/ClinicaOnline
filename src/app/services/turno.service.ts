@@ -22,10 +22,10 @@ export class TurnoService {
 
   constructor(private fire: Firestore) {}
 
-  add(objeto: any) {
+  add(objeto: Turno) {
     return addDoc(this.turnos, objeto);
   }
-
+  
   actualizar(id: string, objeto: any) {
     const docRef = doc(this.fire, 'turnos', id);
     return updateDoc(docRef, objeto);

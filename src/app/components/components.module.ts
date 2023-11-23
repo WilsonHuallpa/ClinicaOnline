@@ -12,9 +12,13 @@ import { AltaProfesionalesComponent } from './Altas/alta-profesionales/alta-prof
 import { AltaAdminComponent } from './Altas/alta-admin/alta-admin.component';
 import { FavbuttonComponent } from './favbutton/favbutton.component';
 import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
-import { SolicitarTurnoComponent } from './solicitar-turno/solicitar-turno.component';
+import { DoctorPipe } from '../pipes/doctor.pipe';
+
 import { MisTurnosComponent } from './mis-turnos/mis-turnos.component';
 import { TurnosSolicitarComponent } from './turnos-solicitar/turnos-solicitar.component';
+import { MisHorariosComponent } from './mis-horarios/mis-horarios.component';
+import { ChaptchaComponent } from './chaptcha/chaptcha.component';
+import { ModalTurnoComponent } from './modal-turno/modal-turno.component';
 
 @NgModule({
   declarations: [
@@ -28,16 +32,14 @@ import { TurnosSolicitarComponent } from './turnos-solicitar/turnos-solicitar.co
     AltaAdminComponent,
     FavbuttonComponent,
     MiPerfilComponent,
-    SolicitarTurnoComponent,
+    DoctorPipe,
     MisTurnosComponent,
-    TurnosSolicitarComponent
+    TurnosSolicitarComponent,
+    MisHorariosComponent,
+    ChaptchaComponent,
+    ModalTurnoComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule],
   exports: [
     LayoutComponent,
     SpinnerComponent,
@@ -48,10 +50,9 @@ import { TurnosSolicitarComponent } from './turnos-solicitar/turnos-solicitar.co
     AltaAdminComponent,
     FavbuttonComponent,
     MiPerfilComponent,
-    SolicitarTurnoComponent,
+    ModalTurnoComponent,
     MisTurnosComponent,
-    TurnosSolicitarComponent
-  ]
+    TurnosSolicitarComponent,
+  ],
 })
-
-export class ComponentsModule { }
+export class ComponentsModule {}

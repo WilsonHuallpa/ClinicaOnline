@@ -11,10 +11,12 @@ import { environment } from '../environments/environments';
 import { ComponentsModule } from './components/components.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
+import { HttpClientModule } from '@angular/common/http';
+
+
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -25,8 +27,12 @@ import { ToastrModule } from 'ngx-toastr';
     ComponentsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    RecaptchaV3Module,
+    HttpClientModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: RECAPTCHA_V3_SITE_KEY, useValue: '6Ld-oBgpAAAAAIqtf5385weDlA9hsPopf7BDqZQ0' },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -2,12 +2,11 @@ import { Component } from '@angular/core';
 import { Item } from 'src/app/components/layout/layout.component';
 
 @Component({
-  selector: 'app-paciente',
-  templateUrl: './paciente.component.html',
-  styleUrls: ['./paciente.component.scss']
+  selector: 'app-profesional',
+  templateUrl: './profesional.component.html',
+  styleUrls: ['./profesional.component.scss']
 })
-export class PacienteComponent {
-
+export class ProfesionalComponent {
 
   items: Item[] = [];
   constructor() {

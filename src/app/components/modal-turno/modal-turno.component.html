@@ -1,0 +1,57 @@
+<div class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 *ngIf="estado === 'cancelar'" class="modal-title">
+          ¿Esta seguro que deseas cancelar?
+        </h4>
+        <h4 *ngIf="estado === 'resena'" class="modal-title">Ver reseña</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="onCloseModal()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div *ngIf="estado === 'cancelar'">
+            <p>Debe dejar un comentario del porque se cancela el turno.</p>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Message:</label>
+              <textarea
+                class="form-control"
+                id="message-text"
+                name="mensajeCancelacion"
+                [(ngModel)]="mensajeCancelacion"
+              ></textarea>
+            </div>
+          </div>
+          <div *ngIf="estado === 'resena' ">
+            <p>{{data?.reviewEsp}}</p>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          (click)="onCloseModal()"
+        >
+          Cancelar
+        </button>
+        <button
+          *ngIf="estado == 'cancelar'"
+          type="button"
+          class="btn btn-danger"
+          [disabled]="!isMensajePresente()"
+          (click)="cancelarTurno()"
+        >
+          Comfirmar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PacienteComponent } from './paciente.component';
 import { MiPerfilComponent } from 'src/app/components/mi-perfil/mi-perfil.component';
-import { SolicitarTurnoComponent } from 'src/app/components/solicitar-turno/solicitar-turno.component';
 import { MisTurnosComponent } from 'src/app/components/mis-turnos/mis-turnos.component';
 import { TurnosSolicitarComponent } from 'src/app/components/turnos-solicitar/turnos-solicitar.component';
 

@@ -4,7 +4,7 @@ import { ClinicaService } from 'src/app/services/clinica.service';
 import { OtroService } from 'src/app/services/otro.service';
 import { ReservaService } from 'src/app/services/reserva.service';
 import { TurnoService } from 'src/app/services/turno.service';
-
+export type Estado = 'cancelar' | 'resena';
 @Component({
   selector: 'app-mis-turnos',
   templateUrl: './mis-turnos.component.html',
@@ -13,8 +13,8 @@ import { TurnoService } from 'src/app/services/turno.service';
 export class MisTurnosComponent {
   turnosOriginal: any[] = [];
   turnos: Turno[] = [];
-  turnoSeleccionado: any;
-
+  turnoSeleccionado: Turno | null = null;
+  estado: Estado = 'cancelar';
   filtro: string = '';
 
   modoNormal: boolean = true;
@@ -26,7 +26,8 @@ export class MisTurnosComponent {
   modoFinalizar: boolean = false;
 
   miRol: string = '';
-
+  miUID: string = '';
+  idTipo: string = '';
   constructor(
     private turnoService: TurnoService,
     private reservaService: ReservaService,
@@ -37,90 +38,54 @@ export class MisTurnosComponent {
       this.otroService.getDocumentSnapshotDeUsuario().subscribe(
         ds => {
           this.miRol = ds.data().rol;
-          ///averigua mañana esto
           if (this.miRol === 'Administrador') {
             this.turnoService.getTurnos().subscribe(data => this.turnos = data);
-            // this.turnoService.getRef()
-            //   .onSnapshot(
-            //     qs => this.cargarTurnos(qs)
-            //   )
           }
           else {
-            const miUID = ds.id;
-            let idTipo = '';
-
+            this.miUID = ds.id;
             if (this.miRol === 'Paciente') {
-              idTipo = 'idPac';
+              this.idTipo = 'idPac';
             }
             else if (this.miRol === 'Profesional') {
-              idTipo = 'idEsp';
+              this.idTipo = 'idEsp';
             }
-            this.turnoService.getTurnoPorid(idTipo, miUID).subscribe(data => this.turnos = data)
-            // this.turnoService.getRef()
-            //   .where(idTipo, '==', miUID)
-            //   .onSnapshot(
-            //     qs => this.cargarTurnos(qs)
-            //   )
+            this.obtenerTurnos(this.idTipo, this.miUID)
           }
         }
       );
     }
 
-    cargarTurnos(qs: any) {
-      this.turnosOriginal = [];
-
-      qs.forEach((doc:any) => {
-        const id: string = doc.id;
-        const data: any = doc.data();
-
-        this.turnosOriginal.push({...data, id});
-      });
-
-      this.turnos = this.turnosOriginal.slice();
-    }
-
     // filtrar() {
     pacienteFiltrar() {
-      if (this.filtro === '') {
-        this.turnos = this.turnosOriginal.slice();
+      if (this.filtro) {
+        this.turnos = this.turnos.filter(turno =>
+          turno.especialidad.toLowerCase().includes(this.filtro.toLowerCase()) ||
+          turno.especialista.nombre.toLowerCase().includes(this.filtro.toLowerCase()) ||
+          turno.especialista.apellido.toLowerCase().includes(this.filtro.toLowerCase())
+        );
+      } else {
+        
+        this.obtenerTurnos(this.idTipo, this.miUID)
       }
-      else {
-        const filtrados: any[] = [];
-
-        this.turnosOriginal.forEach(
-          turno => {
-            if(
-              turno.especialidad.includes(this.filtro) ||
-              turno.especialista.nombre.includes(this.filtro) || // paciente.nombre
-              turno.especialista.apellido.includes(this.filtro) // paciente.apellido
-              ) {
-              filtrados.push(turno);
-            }
-          }
-        )
-
-        this.turnos = filtrados.slice();
-      }
+    }
+    obtenerTurnos(idTipo: string, miUID: string){
+      this.turnoService.getTurnoPorid(idTipo, miUID).subscribe(data => this.turnos = data)
     }
     especialistaFiltrar() {
       if (this.filtro === '') {
         this.turnos = this.turnosOriginal.slice();
-      }
-      else {
+      } else {
         const filtrados: any[] = [];
-
-        this.turnosOriginal.forEach(
-          turno => {
-            if(
-              turno.especialidad.includes(this.filtro) ||
-              turno.paciente.nombre.includes(this.filtro) ||
-              turno.paciente.apellido.includes(this.filtro)
-              ) {
-              filtrados.push(turno);
-            }
+        this.turnosOriginal.forEach(turno => {
+          if (
+            turno.especialidad.includes(this.filtro) ||
+            (turno.especialista &&
+              (turno.especialista.nombre.includes(this.filtro) ||
+                turno.especialista.apellido.includes(this.filtro)))
+          ) {
+            filtrados.push(turno);
           }
-        )
-
+        });
         this.turnos = filtrados.slice();
       }
     }
@@ -135,11 +100,9 @@ export class MisTurnosComponent {
       this.modoFinalizar= false;
     }
 
-    cancelarTurnoHandler(turno: any) {
+    cancelarTurnoHandler(turno: Turno | null) {
+      this.estado = 'cancelar';
       this.turnoSeleccionado = turno;
-
-      this.modoNormal = false;
-      this.modoCancelar = true;
     }
     cancelarConfirmarHandler(razon: string) {
       const nuevoTurno = {
@@ -147,16 +110,16 @@ export class MisTurnosComponent {
         razon: razon
       };
 
-      this.turnoService.actualizar(this.turnoSeleccionado.id, nuevoTurno)
-        .then(
-          () => this.reservaService.eliminar(this.turnoSeleccionado.idEsp, this.turnoSeleccionado.fecha)
-        )
-        .then(
-          () => {
-            this.modoNormal = true;
-            this.modoCancelar = false;
-          }
-        )
+      // this.turnoService.actualizar(this.turnoSeleccionado.id, nuevoTurno)
+      //   .then(
+      //     () => this.reservaService.eliminar(this.turnoSeleccionado.idEsp, this.turnoSeleccionado.fecha)
+      //   )
+      //   .then(
+      //     () => {
+      //       this.modoNormal = true;
+      //       this.modoCancelar = false;
+      //     }
+      //   )
     }
 
     rechazarTurnoHandler(turno: any) {
@@ -171,16 +134,16 @@ export class MisTurnosComponent {
         razon: razon
       };
 
-      this.turnoService.actualizar(this.turnoSeleccionado.id, nuevoTurno)
-        .then(
-          () => this.reservaService.eliminar(this.turnoSeleccionado.idEsp, this.turnoSeleccionado.fecha)
-        )
-        .then(
-          () => {
-            this.modoNormal = true;
-            this.modoRechazar = false;
-          }
-        )
+    //   this.turnoService.actualizar(this.turnoSeleccionado.id, nuevoTurno)
+    //     .then(
+    //       () => this.reservaService.eliminar(this.turnoSeleccionado.idEsp, this.turnoSeleccionado.fecha)
+    //     )
+    //     .then(
+    //       () => {
+    //         this.modoNormal = true;
+    //         this.modoRechazar = false;
+    //       }
+    //     )
     }
 
     completarEncuestaHandler() {
@@ -194,20 +157,19 @@ export class MisTurnosComponent {
       this.modoCalificarAtencion = true;
     }
     calificarConfirmarHandler(review: string) {
-      this.turnoService.actualizar(this.turnoSeleccionado.id, {reviewPac: review})
-        .then(
-          () => {
-            this.modoNormal = true;
-            this.modoCalificarAtencion = false;
-          }
-        )
+      // this.turnoService.actualizar(this.turnoSeleccionado.id, {reviewPac: review})
+      //   .then(
+      //     () => {
+      //       this.modoNormal = true;
+      //       this.modoCalificarAtencion = false;
+      //     }
+      //   )
     }
 
-    verReviewHandler(turno: any) {
+    verReviewHandler(turno: Turno | null) {
+      this.estado = 'resena'
       this.turnoSeleccionado = turno;
-
-      this.modoNormal = false;
-      this.modoReview = true;
+     
     }
 
     aceptarTurnoHandler(turno: any) {
@@ -224,30 +186,29 @@ export class MisTurnosComponent {
       const review = reviewEHistoriaClinica.review;
       const hc = reviewEHistoriaClinica.historiaClinica;
 
-      this.usuarioService.updatePaciente(this.turnoSeleccionado.idPac, hc)
-        .then(
-          () => {
-            const turnoActualizado = {
-              estado: 'realizado',
-              reviewEsp: review,
-              paciente: {
-                ...this.turnoSeleccionado.paciente,
-                historiaClinica: hc
-              }
-            };
+      // this.usuarioService.updatePaciente(this.turnoSeleccionado.idPac, hc)
+      //   .then(
+      //     () => {
+      //       const turnoActualizado = {
+      //         estado: 'realizado',
+      //         reviewEsp: review,
+      //         paciente: {
+      //           ...this.turnoSeleccionado.paciente,
+      //           historiaClinica: hc
+      //         }
+      //       };
 
-          this.turnoService.actualizar(this.turnoSeleccionado.id, turnoActualizado)
-            .then(
-              () => this.reservaService.eliminar(this.turnoSeleccionado.idEsp, this.turnoSeleccionado.fecha)
-            )
-            .then(
-              () => {
-                this.modoNormal = true;
-                this.modoFinalizar = false;
-              }
-            )
-        });
+      //     this.turnoService.actualizar(this.turnoSeleccionado.id, turnoActualizado)
+      //       .then(
+      //         () => this.reservaService.eliminar(this.turnoSeleccionado.idEsp, this.turnoSeleccionado.fecha)
+      //       )
+      //       .then(
+      //         () => {
+      //           this.modoNormal = true;
+      //           this.modoFinalizar = false;
+      //         }
+      //       )
+      //   });
         
     }
-
 }

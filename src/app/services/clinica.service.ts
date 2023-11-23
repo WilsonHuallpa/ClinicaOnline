@@ -37,7 +37,7 @@ export class ClinicaService {
       ObraSocial[]
     >;
   }
-
+  
   // Apaciente
   addPaciente(paciente: Paciente, id: string) {
     const collRef = collection(this.fire, 'usuarios');
@@ -66,7 +66,10 @@ export class ClinicaService {
     const docRef = doc(this.fire, 'usuarios', id);
     return updateDoc(docRef, { estado: value });
   }
-
+  updateProfesionalAgenda(id: string, value: Array<boolean>) {
+    const docRef = doc(this.fire, 'usuarios', id);
+    return updateDoc(docRef, { agenda: value });
+  }
   getProfesionales(): Observable<Profesional[]> {
     const collRef = collection(this.fire, 'usuarios');
     const q = query(
