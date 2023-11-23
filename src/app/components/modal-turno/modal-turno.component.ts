@@ -8,7 +8,7 @@ import { TurnoService } from 'src/app/services/turno.service';
   styleUrls: ['./modal-turno.component.scss']
 })
 export class ModalTurnoComponent implements OnInit {
-  mensajeCancelacion: string = '';
+  mensaje: string = '';
   @Input() data?: Turno | null;
   @Input() estado?: string;
   @Output() closeModal = new EventEmitter();
@@ -23,8 +23,12 @@ export class ModalTurnoComponent implements OnInit {
   }
   cancelarTurno() {
     if(this.data && this.data.id){
-      this.data.razon = this.mensajeCancelacion;
-      this.data.estado = 'cancelado';
+      if(this.estado === 'cancelar'){
+        this.data.razon = this.mensaje;
+        this.data.estado = 'cancelado';
+      }else if(this.estado === 'calificar'){
+        this.data.reviewPac = this.mensaje
+      }
       this.turnoServices.actualizar(this.data.id, this.data).then(() =>{
         this.closeModal.emit();
       }).catch((err) => {
@@ -33,6 +37,6 @@ export class ModalTurnoComponent implements OnInit {
     }
   }
   isMensajePresente(): boolean {
-    return this.mensajeCancelacion.trim().length > 0;
+    return this.mensaje.trim().length > 0;
   }
 }

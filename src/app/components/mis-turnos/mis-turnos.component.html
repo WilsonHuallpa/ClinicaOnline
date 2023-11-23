@@ -77,8 +77,11 @@
               Ver reseña
             </button>
           </td>
+
           <td *ngIf="turno.estado === 'realizado' && miRol === 'Paciente'">
-            <button class="btn btn-outline-light">Completar encuesta</button>
+            <button class="btn btn-outline-light"
+            (click)="completarEncuestaHandler(turno)"
+            >Completar encuesta</button>
           </td>
           <td *ngIf=" turno.estado === 'realizado' && miRol === 'Paciente' &&!turno.reviewPac">
             <button
@@ -88,6 +91,7 @@
               Calificar atención
             </button>
           </td>
+
           <td *ngIf="turno.estado === 'reservado' && miRol === 'Especialista'">
             <button
               class="btn btn-outline-danger"
@@ -130,6 +134,22 @@
     [data]="turnoSeleccionado"
     [estado]="estado"
     (closeModal)="verReviewHandler(null)"
+  >
+  </app-modal-turno>
+
+  <app-modal-turno
+    *ngIf="turnoSeleccionado && estado == 'calificar'"
+    [data]="turnoSeleccionado"
+    [estado]="estado"
+    (closeModal)="calificarAtencionHandler(null)"
+  >
+  </app-modal-turno>
+
+  <app-modal-turno
+    *ngIf="turnoSeleccionado && estado == 'encuesta'"
+    [data]="turnoSeleccionado"
+    [estado]="estado"
+    (closeModal)="completarEncuestaHandler(null)"
   >
   </app-modal-turno>
   <!-- <app-cancelar-turno

@@ -4,7 +4,7 @@ import { ClinicaService } from 'src/app/services/clinica.service';
 import { OtroService } from 'src/app/services/otro.service';
 import { ReservaService } from 'src/app/services/reserva.service';
 import { TurnoService } from 'src/app/services/turno.service';
-export type Estado = 'cancelar' | 'resena';
+export type Estado = 'cancelar' | 'resena' | 'calificar' | 'encuesta';
 @Component({
   selector: 'app-mis-turnos',
   templateUrl: './mis-turnos.component.html',
@@ -16,18 +16,10 @@ export class MisTurnosComponent {
   turnoSeleccionado: Turno | null = null;
   estado: Estado = 'cancelar';
   filtro: string = '';
-
-  modoNormal: boolean = true;
-  modoCancelar: boolean = false;
-  modoReview: boolean = false;
-  modoCompletarEncuesta: boolean = false;
-  modoCalificarAtencion: boolean = false;
-  modoRechazar: boolean = false;
-  modoFinalizar: boolean = false;
-
   miRol: string = '';
   miUID: string = '';
   idTipo: string = '';
+
   constructor(
     private turnoService: TurnoService,
     private reservaService: ReservaService,
@@ -55,7 +47,6 @@ export class MisTurnosComponent {
       );
     }
 
-    // filtrar() {
     pacienteFiltrar() {
       if (this.filtro) {
         this.turnos = this.turnos.filter(turno =>
@@ -64,7 +55,6 @@ export class MisTurnosComponent {
           turno.especialista.apellido.toLowerCase().includes(this.filtro.toLowerCase())
         );
       } else {
-        
         this.obtenerTurnos(this.idTipo, this.miUID)
       }
     }
@@ -90,125 +80,34 @@ export class MisTurnosComponent {
       }
     }
 
-    volverHandler() {
-      this.modoNormal = true;
-      this.modoCancelar= false;
-      this.modoReview= false;
-      this.modoCompletarEncuesta= false;
-      this.modoCalificarAtencion= false;
-      this.modoRechazar= false;
-      this.modoFinalizar= false;
-    }
-
     cancelarTurnoHandler(turno: Turno | null) {
       this.estado = 'cancelar';
       this.turnoSeleccionado = turno;
-    }
-    cancelarConfirmarHandler(razon: string) {
-      const nuevoTurno = {
-        estado: 'cancelado',
-        razon: razon
-      };
-
-      // this.turnoService.actualizar(this.turnoSeleccionado.id, nuevoTurno)
-      //   .then(
-      //     () => this.reservaService.eliminar(this.turnoSeleccionado.idEsp, this.turnoSeleccionado.fecha)
-      //   )
-      //   .then(
-      //     () => {
-      //       this.modoNormal = true;
-      //       this.modoCancelar = false;
-      //     }
-      //   )
-    }
-
-    rechazarTurnoHandler(turno: any) {
-      this.turnoSeleccionado = turno;
-
-      this.modoNormal = false;
-      this.modoRechazar = true;
-    }
-    rechazarConfirmarHandler(razon: string) {
-      const nuevoTurno = {
-        estado: 'rechazado',
-        razon: razon
-      };
-
-    //   this.turnoService.actualizar(this.turnoSeleccionado.id, nuevoTurno)
-    //     .then(
-    //       () => this.reservaService.eliminar(this.turnoSeleccionado.idEsp, this.turnoSeleccionado.fecha)
-    //     )
-    //     .then(
-    //       () => {
-    //         this.modoNormal = true;
-    //         this.modoRechazar = false;
-    //       }
-    //     )
-    }
-
-    completarEncuestaHandler() {
-
-    }
-
-    calificarAtencionHandler(turno: any) {
-      this.turnoSeleccionado = turno;
-
-      this.modoNormal = false;
-      this.modoCalificarAtencion = true;
-    }
-    calificarConfirmarHandler(review: string) {
-      // this.turnoService.actualizar(this.turnoSeleccionado.id, {reviewPac: review})
-      //   .then(
-      //     () => {
-      //       this.modoNormal = true;
-      //       this.modoCalificarAtencion = false;
-      //     }
-      //   )
     }
 
     verReviewHandler(turno: Turno | null) {
       this.estado = 'resena'
       this.turnoSeleccionado = turno;
+    }
+  
+    calificarAtencionHandler(turno: any) {
+      this.estado = 'calificar';
+      this.turnoSeleccionado = turno;
+    }
+
+    completarEncuestaHandler(turno: Turno | null) {
+      this.estado = 'encuesta';
+      this.turnoSeleccionado = turno;
+    }
+    rechazarTurnoHandler(turno: Turno | null) {
+     
+    }
+    aceptarTurnoHandler(turno:  Turno | null) {
      
     }
 
-    aceptarTurnoHandler(turno: any) {
-      this.turnoService.actualizar(turno.id, {estado: 'aceptado'});
-    }
-
-    finalizarTurnoHandler(turno: any) {
+    finalizarTurnoHandler(turno:  Turno | null) {
       this.turnoSeleccionado = turno;
-
-      this.modoNormal = false;
-      this.modoFinalizar = true;
     }
-    finalizarConfirmarHandler(reviewEHistoriaClinica: {review:string, historiaClinica:any}) {
-      const review = reviewEHistoriaClinica.review;
-      const hc = reviewEHistoriaClinica.historiaClinica;
 
-      // this.usuarioService.updatePaciente(this.turnoSeleccionado.idPac, hc)
-      //   .then(
-      //     () => {
-      //       const turnoActualizado = {
-      //         estado: 'realizado',
-      //         reviewEsp: review,
-      //         paciente: {
-      //           ...this.turnoSeleccionado.paciente,
-      //           historiaClinica: hc
-      //         }
-      //       };
-
-      //     this.turnoService.actualizar(this.turnoSeleccionado.id, turnoActualizado)
-      //       .then(
-      //         () => this.reservaService.eliminar(this.turnoSeleccionado.idEsp, this.turnoSeleccionado.fecha)
-      //       )
-      //       .then(
-      //         () => {
-      //           this.modoNormal = true;
-      //           this.modoFinalizar = false;
-      //         }
-      //       )
-      //   });
-        
-    }
 }

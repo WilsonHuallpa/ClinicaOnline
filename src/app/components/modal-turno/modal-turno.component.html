@@ -6,6 +6,7 @@
           ¿Esta seguro que deseas cancelar?
         </h4>
         <h4 *ngIf="estado === 'resena'" class="modal-title">Ver reseña</h4>
+        <h4 *ngIf="estado === 'calificar'" class="modal-title">Calificar Atención</h4>
         <button
           type="button"
           class="btn-close"
@@ -24,12 +25,25 @@
                 class="form-control"
                 id="message-text"
                 name="mensajeCancelacion"
-                [(ngModel)]="mensajeCancelacion"
+                [(ngModel)]="mensaje"
               ></textarea>
             </div>
           </div>
           <div *ngIf="estado === 'resena' ">
             <p>{{data?.reviewEsp}}</p>
+          </div>
+          <div *ngIf="estado === 'calificar'">
+            <p>Debe dejar un comentario de como fue la
+              atención del Especialista.</p>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Message:</label>
+              <textarea
+                class="form-control"
+                id="message-text"
+                name="mensajeCancelacion"
+                [(ngModel)]="mensaje"
+              ></textarea>
+            </div>
           </div>
         </form>
       </div>
