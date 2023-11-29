@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   Storage,
   getDownloadURL,
@@ -14,6 +14,7 @@ import {
 import { ObraSocial } from 'src/app/interfaces/ObraSocial';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClinicaService } from 'src/app/services/clinica.service';
+import { ReCaptcha2Component } from 'ngx-captcha';
 
 @Component({
   selector: 'app-alta-pacientes',
@@ -27,6 +28,11 @@ export class AltaPacientesComponent implements OnInit {
   obraSociales: ObraSocial[] = [];
   selectedObraSocial: string | null = null;
   loading: boolean = false;
+  siteKey: string;
+  recaptcha: boolean = false;
+  @ViewChild('captchaElem') captchaElem!: ReCaptcha2Component;
+
+
   constructor(
     private fb: FormBuilder,
     private clinicaFire: ClinicaService,
@@ -53,6 +59,7 @@ export class AltaPacientesComponent implements OnInit {
       imagen2: [''],
       rol: ['Paciente'],
     });
+    this.siteKey = '6Lck3yApAAAAAD67G7-iTRntXQfLlcXcUHWiYdhh';
   }
 
   ngOnInit(): void {
@@ -108,7 +115,9 @@ export class AltaPacientesComponent implements OnInit {
     const snapshot = await uploadBytes(imgRef, file);
     return await getDownloadURL(imgRef);
   }
-  // async verificarCorreo() {
-  //   this.auth.getUserLogged();
-  // }
+  handleSuccess($even:any):void {
+    if($even){
+      this.recaptcha = true;
+    }
+  }
 }

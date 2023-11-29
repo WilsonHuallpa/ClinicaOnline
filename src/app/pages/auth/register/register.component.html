@@ -36,6 +36,7 @@
         />
       </div>
     </div>
+
     <div *ngIf="isClienteActive" class="container" style="margin-top: 20px;">
       <app-alta-pacientes style="color: white;"></app-alta-pacientes>
     </div>
@@ -44,68 +45,4 @@
     </div>
   </div>
 
-  <!-- <div class="py-5 text-center">
-    <div>
-      <img
-      class="d-block mx-auto mb-4"
-      src="../../../../assets/icon-clinica.png"
-      alt=""
-      width="300"
-      height="300"
-    /> <h1>clientes</h1>
-    </div>
-  
-    <img
-    class="d-block mx-auto mb-4"
-    src="../../../../assets/icon-clinica.png"
-    alt=""
-    width="300"
-    height="300"
-  />
-  </div> -->
-  <!-- <div class="py-5 text-center">
-    <img
-      class="d-block mx-auto mb-4"
-      src="../../../../assets/icon-clinica.png"
-      alt=""
-      width="72"
-      height="57"
-    />
-    <h2>Clinica online</h2>
-  </div> -->
-
-  <!-- <div>
-    <h4 class="border-bottom pb-2 mb-0">Alta de Usuarios</h4>
-    <div class="card">
-      <div class="card-header">
-        <ul class="nav nav-tabs card-header-tabs">
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              [class.active]="isClienteActive"
-              (click)="mostrarClienteComponent()"
-              >Paciente</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              [class.active]="isProfesionalActive"
-              (click)="mostrarProfesionalComponent()"
-              >Profesional</a
-            >
-          </li>
-        </ul>
-      </div>
-
-      <div class="card-body">
-        <div *ngIf="isClienteActive">
-          <app-alta-pacientes></app-alta-pacientes>
-        </div>
-        <div *ngIf="isProfesionalActive">
-          <app-alta-profesionales></app-alta-profesionales>
-        </div>
-      </div>
-    </div>
-  </div> -->
 </div>

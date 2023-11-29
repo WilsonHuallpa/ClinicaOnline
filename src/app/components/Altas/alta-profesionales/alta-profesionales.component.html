@@ -1,5 +1,5 @@
 
-<div class="container mb-5">
+<div class="container mb-5 ">
     <div class="row" *ngIf="!loading">
       <div class="col-md-5 col-lg-4 order-md-last">
         <app-tabla-especialidad (seleccionar)="seleccionarEspecialidad($event)" />
@@ -203,7 +203,13 @@
               />
             </div>
           </div>
-  
+          <form  style="margin-top: 5px;">
+            <ngx-recaptcha2 #captchaElem
+              [siteKey]="siteKey"
+              (success)="handleSuccess($event)"
+              >
+            </ngx-recaptcha2>
+          </form>
           <hr class="my-4" />
           <button
             class="w-100 btn btn-lg"

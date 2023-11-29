@@ -21,7 +21,6 @@ export class RegisterComponent {
       contrasena: '123546',
     },]
   constructor(private router: Router){
-    
   }
   mostrarClienteComponent() {
     this.isClienteActive = true;

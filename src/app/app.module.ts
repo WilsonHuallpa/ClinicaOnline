@@ -15,6 +15,7 @@ import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
 import { HttpClientModule } from '@angular/common/http';
 
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -29,6 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
     ToastrModule.forRoot(),
     RecaptchaV3Module,
     HttpClientModule,
+    
   ],
   providers: [
     { provide: RECAPTCHA_V3_SITE_KEY, useValue: '6Ld-oBgpAAAAAIqtf5385weDlA9hsPopf7BDqZQ0' },

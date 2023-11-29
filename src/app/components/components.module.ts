@@ -19,7 +19,7 @@ import { TurnosSolicitarComponent } from './turnos-solicitar/turnos-solicitar.co
 import { MisHorariosComponent } from './mis-horarios/mis-horarios.component';
 import { ChaptchaComponent } from './chaptcha/chaptcha.component';
 import { ModalTurnoComponent } from './modal-turno/modal-turno.component';
-
+import { NgxCaptchaModule } from 'ngx-captcha';
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -39,7 +39,7 @@ import { ModalTurnoComponent } from './modal-turno/modal-turno.component';
     ChaptchaComponent,
     ModalTurnoComponent,
   ],
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule,NgxCaptchaModule],
   exports: [
     LayoutComponent,
     SpinnerComponent,

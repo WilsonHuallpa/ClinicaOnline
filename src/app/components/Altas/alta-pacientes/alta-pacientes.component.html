@@ -10,7 +10,7 @@
          
         >
           <div class="row g-3">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-4">
               <label for="nombre" class="form-label">Nombre</label>
               <input
                 type="text"
@@ -38,7 +38,7 @@
                 EL <strong>Nombre</strong> Debe ser mas de 3 caracteres</span
               >
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-4">
               <label for="apellido" class="form-label">Apellido</label>
               <input
                 type="text"
@@ -67,7 +67,7 @@
               >
             </div>
   
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-4">
               <label for="edad" class="form-label">Edad</label>
               <input
                 id="edad"
@@ -133,7 +133,7 @@
               </span>
             </div>
   
-            <div class="col-12">
+            <div class="col-12 col-md-6">
               <label for="obraSocial" class="form-label">Obra social</label>
               <select class="form-select" aria-label="Obra Social" formControlName="obraSocial">
                 <option [ngValue]="null">Selecciona una Obra Social</option>
@@ -141,7 +141,7 @@
               </select>
             </div>
 
-            <div class="col-12">
+            <div class="col-12 col-md-6">
               <label for="mail" class="form-label">Correo Electronico</label>
               <input
                 type="text"
@@ -163,7 +163,7 @@
               </span>
             </div>
             
-            <div class="col-12">
+            <div class="col-12 col-md-6">
               <label for="password" class="form-label">Contraseña</label>
               <input
                 type="password"
@@ -185,7 +185,7 @@
               </span>
             </div>
           
-            <div class="col-12">
+            <div class="col-12 col-md-6">
               <label for="image01n" class="form-label">Imagen</label>
               <input
                 type="file"
@@ -196,7 +196,7 @@
               />
             </div>
 
-            <div class="col-12">
+            <div class="col-12 col-md-6">
               <label for="image01n" class="form-label">
                 Imagen 2
                 <span class="text-muted">(Opcional)</span>
@@ -210,13 +210,19 @@
               />
             </div>
           </div>
-  
+          <div  style="margin-top: 5px;">
+            <ngx-recaptcha2 #captchaElem
+              [siteKey]="siteKey"
+              (success)="handleSuccess($event)"
+              >
+            </ngx-recaptcha2>
+          </div>
           <hr class="my-4" />
           <button
             class="w-100 btn btn-lg"
             style="background-color: #0d689d; color: white"
             type="submit"
-            [disabled]="!paciente.valid"
+            [disabled]="!paciente.valid || !recaptcha"
           >
             Agregar
           </button>

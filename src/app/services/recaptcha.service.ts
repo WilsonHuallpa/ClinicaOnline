@@ -8,13 +8,14 @@ import {catchError, map} from "rxjs/operators";
   providedIn: 'root'
 })
 export class RecaptchaService {
-  constructor(private http: HttpClient) {
+  private apiUrl = 'URL_DE_TU_SERVICIO_DE_VALIDACION';
+  constructor(private http: HttpClient) {}
+
+  validarCaptcha(token: string): Observable<any> {
+    const data = { token };
+    return this.http.post<any>(this.apiUrl, data);
   }
-  /*
-  Modo de comunicación con el servidor asíncrono
-  parametro token: string
-  return Observable<any>
-   */
+  
   getTokenClientModule(token: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({

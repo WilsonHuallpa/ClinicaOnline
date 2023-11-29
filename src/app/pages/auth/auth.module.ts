@@ -25,7 +25,7 @@ import { VerificarCorreoComponent } from './verificar-correo/verificar-correo.co
     RouterModule,
     ReactiveFormsModule,
     ComponentsModule,
-    FormsModule
+    FormsModule,
   ]
 })
 export class AuthModule { }

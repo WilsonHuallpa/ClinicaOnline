@@ -25,6 +25,8 @@ export class AltaProfesionalesComponent {
   file: any;
   loading: boolean = false;
   especialidades: string[] = [];
+  siteKey: string;
+  recaptcha: boolean = false;
   constructor(
     private fb: FormBuilder,
     private clinicaFire: ClinicaService,
@@ -51,6 +53,8 @@ export class AltaProfesionalesComponent {
       estado: ['Pendiente'],
       rol:['Profesional']
     });
+    this.siteKey = '6Lck3yApAAAAAD67G7-iTRntXQfLlcXcUHWiYdhh';
+
   }
 
   ngOnInit(): void {
@@ -108,5 +112,10 @@ export class AltaProfesionalesComponent {
   }
   eliminarElemento(name: string ) {
     this.especialidades = this.especialidades.filter(especialidad => especialidad !== name);
+  }
+  handleSuccess($even:any):void {
+    if($even){
+      this.recaptcha = true;
+    }
   }
 }
