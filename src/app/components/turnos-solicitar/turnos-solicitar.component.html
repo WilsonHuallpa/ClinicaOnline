@@ -22,27 +22,26 @@
           <fieldset *ngIf="step == 1">
             <h2 class="fs-title">Especialidades</h2>
             <div class="row">
-              <div class="col-6 col-md-4 mb-3" *ngFor="let especialidad of especialidades">
+              <div
+                class="col-6 col-md-4 mb-3"
+                *ngFor="let especialidad of especialidades"
+              >
                 <button
                   type="button"
                   class="especialidad-button"
-                  (click)="onEspecialidadSeleccionadaHandler(especialidad.nombre)"
+                  (click)="
+                    onEspecialidadSeleccionadaHandler(especialidad.nombre)
+                  "
+                  (click)="next()"
                 >
-                  <div class="especialidad-image" 
-                  [style.backgroundImage]="'url(' + especialidad.img + ')'"></div>
+                  <div
+                    class="especialidad-image"
+                    [style.backgroundImage]="getBackgroundImage(especialidad.img)"
+                  ></div>
                 </button>
               </div>
             </div>
-            <input
-              (click)="next()"
-              type="button"
-              name="next"
-              class="next action-button"
-              value="Next"
-              [disabled]="!especialidadDetails.valid"
-            />
           </fieldset>
-
         </form>
 
         <form id="msform">
@@ -57,7 +56,7 @@
                   class="d-flex text-muted pt-3"
                   style="cursor: pointer"
                   (click)="selectProfesional(profesional)"
-                  [class.selected]="profesional === selectedProfesional"
+                  (click)="next()"
                 >
                   <img
                     [src]="profesional.imagen"
@@ -82,15 +81,7 @@
               type="button"
               name="previous"
               class="previous action-button-previous"
-              value="Previous"
-            />
-            <input
-              (click)="next()"
-              type="button"
-              name="next"
-              class="next action-button"
-              value="Next"
-              [disabled]="!selectedProfesional"
+              value="Anterior"
             />
           </fieldset>
         </form>
@@ -99,16 +90,21 @@
             <h2 class="fs-title">Elegí una fecha para el turno</h2>
             <div class="container">
               <div class="row">
-                <div class="col-6 col-md-4 mb-3"  *ngFor="let reserva of reservasProfesional">
+                <div
+                  class="col-6 col-md-4 mb-3"
+                  *ngFor="let reserva of reservasProfesional"
+                >
                   <div *ngFor="let item of reserva.horarios">
-                    <div class="card" (click)="onselectReserva(reserva.fecha, item)"
-                      [class.selected]="reserva.fecha === fecha && item === selecHora">
-                    <div class="card-header">
-                      <span> {{reserva.fecha}} {{item}}</span>
+                    <div
+                      class="card"
+                      (click)="onselectReserva(reserva.fecha, item)"
+                      (click)="next()"
+                    >
+                      <div class="card-header">
+                        <span> {{ reserva.fecha }} {{ item }}</span>
+                      </div>
                     </div>
                   </div>
-                  </div>
-                  
                 </div>
               </div>
             </div>
@@ -117,15 +113,7 @@
               type="button"
               name="previous"
               class="previous action-button-previous"
-              value="Previous"
-            />
-            <input
-              (click)="next()"
-              type="button"
-              name="next"
-              class="next action-button"
-              value="Next"
-              [disabled]="!fecha"
+              value="Anterior"
             />
           </fieldset>
         </form>
@@ -136,10 +124,16 @@
               <h5 class="card-header">{{ turnoSolicitado.especialidad }}</h5>
               <div class="card-body">
                 <p class="card-text">
-                  <strong>Nombre Del profesional:</strong> {{ selectedProfesional?.nombre + ' ' + selectedProfesional?.apellido}}<br>
-                  <strong>Fecha:</strong> {{ turnoSolicitado.fecha }}<br>
-                  <strong>Hora:</strong> {{ turnoSolicitado.hora }}<br>
-                  <strong>Especialidad:</strong> {{ turnoSolicitado.especialidad }}<br>
+                  <strong>Nombre Del profesional:</strong>
+                  {{
+                    selectedProfesional?.nombre +
+                      " " +
+                      selectedProfesional?.apellido
+                  }}<br />
+                  <strong>Fecha:</strong> {{ turnoSolicitado.fecha }}<br />
+                  <strong>Hora:</strong> {{ turnoSolicitado.hora }}<br />
+                  <strong>Especialidad:</strong>
+                  {{ turnoSolicitado.especialidad }}<br />
                 </p>
               </div>
             </div>
@@ -148,22 +142,26 @@
               type="button"
               name="previous"
               class="previous action-button-previous"
-              value="Previous"
+              value="Anterior"
             />
             <button
-            type="button"
-            name="submit"
-            class="submit action-button"
-            [disabled]="loading"
-            (click)="submit()"
-          >
-            <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            <span *ngIf="!loading">Submit</span>
-          </button>    
+              type="button"
+              name="submit"
+              class="submit action-button"
+              [disabled]="loading"
+              (click)="submit()"
+            >
+              <span
+                *ngIf="loading"
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              <span *ngIf="!loading">Alta</span>
+            </button>
           </fieldset>
         </form>
       </div>
     </div>
   </div>
- 
 </section>

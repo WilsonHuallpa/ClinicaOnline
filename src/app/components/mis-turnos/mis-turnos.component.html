@@ -67,6 +67,7 @@
           <td>{{ turno.especialidad }}</td>
           <td>{{ turno.estado | uppercase }}</td>
           <td class="tdMotivo">{{ turno.razon }}</td>
+
           <td *ngIf="turno.estado === 'reservado'">
             <button
               class="btn btn-danger"
@@ -133,6 +134,14 @@
               Finalizar
             </button>
           </td>
+          <td *ngIf="turno.estado === 'finalizado' && miRol === 'Profesional'">
+            <button
+              class="btn btn-light"
+              (click)="crearHistorialClinica(turno)"
+            >
+            {{turno.historial ? 'Ver Historial': 'Historial clinica' }}
+            </button>
+          </td>
         </tr>
       </table>
     </div>
@@ -178,6 +187,13 @@
   </app-modal-turno>
   <app-modal-turno
     *ngIf="turnoSeleccionado && estado == 'finalizado'"
+    [data]="turnoSeleccionado"
+    [estado]="estado"
+    (closeModal)="finalizarTurnoHandler(null)"
+  >
+  </app-modal-turno>
+  <app-modal-turno
+    *ngIf="turnoSeleccionado && estado == 'historial'"
     [data]="turnoSeleccionado"
     [estado]="estado"
     (closeModal)="finalizarTurnoHandler(null)"

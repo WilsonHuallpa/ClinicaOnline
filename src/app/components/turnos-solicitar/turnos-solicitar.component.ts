@@ -162,4 +162,13 @@ export class TurnosSolicitarComponent implements OnInit {
   onselectHora(hora: string) {
     this.selecHora = hora;
   }
+  getBackgroundImage(img: string): string {
+    if (img.trim() === '') {
+      // Si no hay imagen, utiliza una imagen por defecto
+      return 'url("../../../assets/icon-clinica.png")'; // Ajusta la ruta según tu estructura de archivos
+    } else {
+      // Si hay una imagen, utiliza la URL proporcionada
+      return `url('${img}')`;
+    }
+  }
 }
