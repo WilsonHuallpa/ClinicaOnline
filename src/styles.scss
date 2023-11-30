@@ -6,8 +6,20 @@ body {
   background-position: center;
   background-size: cover;
   height: 100vh;
- 
+  overflow: hidden;
 }
+.scroll-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Ajusta según tus necesidades */
+  overflow-y: auto; /* Habilita la barra de desplazamiento vertical si es necesario */
+}
+
+.container {
+  width: 100%;
+  padding: 20px; /* Ajusta según tus necesidades */
+}
+
 .contenedor-mayor {
   display: flex;
   align-items: center;

@@ -20,6 +20,7 @@ import { MisHorariosComponent } from './mis-horarios/mis-horarios.component';
 import { ChaptchaComponent } from './chaptcha/chaptcha.component';
 import { ModalTurnoComponent } from './modal-turno/modal-turno.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { SeccionPacienteComponent } from './seccion-paciente/seccion-paciente.component';
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -38,6 +39,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     MisHorariosComponent,
     ChaptchaComponent,
     ModalTurnoComponent,
+    SeccionPacienteComponent,
   ],
   imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule,NgxCaptchaModule],
   exports: [
@@ -53,6 +55,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     ModalTurnoComponent,
     MisTurnosComponent,
     TurnosSolicitarComponent,
+    SeccionPacienteComponent
   ],
 })
 export class ComponentsModule {}

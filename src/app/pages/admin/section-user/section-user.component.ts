@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Item } from 'src/app/components/layout/layout.component';
 import { Profesional } from 'src/app/interfaces/Profesional';
@@ -15,6 +15,9 @@ export class SectionUserComponent implements OnInit {
   isClienteActive: boolean = true;
   isProfesionalActive: boolean = false;
   isAdmin: boolean = false; 
+  usuarios: any;
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
+
   constructor(private clinicaFire: ClinicaService, private auth: AuthService, private router: Router) {}
   items: Item[] = [
     {
@@ -37,6 +40,9 @@ export class SectionUserComponent implements OnInit {
     this.clinicaFire.getProfesionales().subscribe((data)=> {
       this.profPendientes = data;
     })
+    this.clinicaFire.getUsuarios().subscribe((data)=> {
+      this.usuarios = data;
+    })
   }
   async onAceptarRechazar(id:string, value: string){
     await this.clinicaFire.updateProfesional(id, value);
@@ -56,5 +62,18 @@ export class SectionUserComponent implements OnInit {
     this.isAdmin = true;
     this.isClienteActive = false;
     this.isProfesionalActive = false;
+  }
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: Event): void {
+    const container = event.target as HTMLElement;
+  
+    // Verifica si el usuario ha llegado al final del contenedor
+    if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
+      // Lógica para cargar más elementos aquí
+      // Puedes llamar a un método que cargue más elementos en 'profPendientes'
+    }
+  }
+  descargarExcel(){
+    
   }
 }

@@ -30,6 +30,11 @@ export class AdminComponent {
         link: 'solicitar-turno',
         active: false,
       },
+      {
+        title: 'Seccion Paciente',
+        link: 'seccion-paciente',
+        active: false,
+      },
     ];
   }
 }

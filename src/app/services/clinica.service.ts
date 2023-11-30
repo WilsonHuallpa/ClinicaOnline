@@ -26,6 +26,10 @@ import Reserva from '../interfaces/Reserva';
 export class ClinicaService {
   constructor(private fire: Firestore) {}
 
+  getUsuarios(): Observable<any> {
+    const collRef = collection(this.fire, 'usuarios');
+    return collectionData(collRef, { idField: 'id' }) as Observable<any>;
+  }
   //obra Social
   addObraSocial(obraSocial: ObraSocial) {
     const collRef = collection(this.fire, 'obraSocial');

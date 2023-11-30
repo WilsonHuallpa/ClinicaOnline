@@ -5,6 +5,7 @@ import { MiPerfilComponent } from 'src/app/components/mi-perfil/mi-perfil.compon
 import { MisTurnosComponent } from 'src/app/components/mis-turnos/mis-turnos.component';
 import { AdminComponent } from './admin.component';
 import { TurnosSolicitarComponent } from 'src/app/components/turnos-solicitar/turnos-solicitar.component';
+import { SeccionPacienteComponent } from 'src/app/components/seccion-paciente/seccion-paciente.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: 'mi-perfil', component: MiPerfilComponent },
       { path: 'mis-turnos', component: MisTurnosComponent },
       { path: 'solicitar-turno', component: TurnosSolicitarComponent },
+      { path: 'seccion-paciente', component: SeccionPacienteComponent },
     ],
   },
 ];
